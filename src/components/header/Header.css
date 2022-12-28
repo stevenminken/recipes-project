@@ -1,0 +1,21 @@
+ul {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+}
+
+li {
+    margin-left: 25px;
+}
+
+img {
+
+}
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100px;
+    border: solid black 2px;
+}
