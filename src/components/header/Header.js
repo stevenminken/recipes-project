@@ -4,18 +4,21 @@ import {NavLink} from "react-router-dom";
 import './Header.css';
 
 const Header = ({children}) => {
+
     return (
         <header className="outer-container">
             <div className="inner-container">
                 <div className="header">
                     <img src={logo} alt="Recipes.com logo" width="40px"/>
+                    {/*TODO NAVIGATION component*/}
                     <nav>
                         <ul>
-                            <li><NavLink to="/">Home</NavLink></li>
-                            <li><NavLink to="/recipe">Recipe</NavLink></li>
-                            <li><NavLink to="/login">Login</NavLink></li>
-                            <li><NavLink to="/registration">Register</NavLink></li>
-                            <li><NavLink to="/profile">Profile</NavLink></li>
+                            {/*TODO styling*/}
+                            <li><NavLink to="/" className={({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Home</NavLink></li>
+                            <li><NavLink to="/recipe" className={({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Recipe</NavLink></li>
+                            <li><NavLink to="/login" className={({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Login</NavLink></li>
+                            <li><NavLink to="/registration" className={({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Register</NavLink></li>
+                            <li><NavLink to="/profile" className={({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Profile</NavLink></li>
                         </ul>
                     </nav>
                 </div>

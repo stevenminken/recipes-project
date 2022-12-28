@@ -19,3 +19,15 @@ img {
     height: 100px;
     border: solid black 2px;
 }
+
+NavLink {
+}
+
+.active-link {
+    color: red;
+
+}
+
+.default-link {
+    color: black;
+}

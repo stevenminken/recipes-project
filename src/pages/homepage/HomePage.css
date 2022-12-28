@@ -1,0 +1,21 @@
+.recipe-article {
+    border-radius: 5px;
+    box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.1);
+    background-color: whitesmoke;
+    flex-basis: 380px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+}
+
+.recipe-article-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 60px 0 0 0;
+}
