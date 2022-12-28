@@ -6,6 +6,7 @@ import RecipePage from "./pages/recipepage/RecipePage";
 import LoginPage from "./pages/loginpage/LoginPage";
 import ProfilePage from "./pages/profilepage/ProfilePage";
 import NotFoundPage from "./pages/notfoundpage/NotFoundPage";
+import ContactPage from "./pages/contactpage/ContactPage";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path="/registration" element={<RegistrationPage/>}/>
+                <Route path="/contact" element={<ContactPage/>}/>
                 <Route path="*" element={<NotFoundPage/>}/>
             </Routes>
         </>

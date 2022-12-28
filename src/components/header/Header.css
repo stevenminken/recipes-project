@@ -1,3 +1,6 @@
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover {color: blue;}
 ul {
     display: flex;
     justify-content: flex-end;
@@ -8,24 +11,24 @@ li {
     margin-left: 25px;
 }
 
-img {
-
+.logo {
+    width: 40px;
 }
 
 .header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     height: 100px;
     border: solid black 2px;
 }
 
 NavLink {
+    list-style: none;
 }
 
 .active-link {
-    color: red;
-
+    border-bottom: solid blue 1px;
 }
 
 .default-link {
