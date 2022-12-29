@@ -40,11 +40,6 @@ const RecipePage = () => {
                                 <p>{recipe.mealType}</p>
                                 <h3>Time</h3>
                                 <p>{recipe.totalTime}</p>
-
-                                {/*<span>*/}
-                                {/*  <BackIcon className="back-icon"/>*/}
-                                {/*  <Link to="/">Take me back</Link>*/}
-                                {/*</span>*/}
                             </div>
                         )}
                     </div>

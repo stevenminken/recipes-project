@@ -7,6 +7,9 @@ import './HomePage.css';
 const HomePage = () => {
 
     const [recipes, setRecipes] = useState([]);
+    const [searchField, setSearchField] = useState('');
+    const [searchInitiated, toggleSearchInitiated] = useState(false);
+
     // https://developer.edamam.com/
     const APP_ID = "973f4fa3";
     const API_KEY = "d99e219fc4b58e878b793779677dd4ee";
@@ -21,12 +24,9 @@ const HomePage = () => {
         return result;
     }
 
-// search:
-//     https://api.edamam.com/search?app_id=973f4fa3&app_key=d99e219fc4b58e878b793779677dd4ee&q=pizza
     useEffect(() => {
         async function fetchData() {
             try {
-                // const response = await axios.get('https://api.edamam.com/search?app_id=973f4fa3&app_key=d99e219fc4b58e878b793779677dd4ee&q=pizza');
                 const response = await axios.get('https://api.edamam.com/api/recipes/v2?type=public&q=pizza&app_id=973f4fa3&app_key=d99e219fc4b58e878b793779677dd4ee');
                 console.log(response.data.hits);
                 setRecipes(response.data.hits);
@@ -38,17 +38,57 @@ const HomePage = () => {
         fetchData();
     }, [])
 
+    useEffect(() => {
+        toggleSearchInitiated(false);
+    }, [searchField]);
+
+    async function fetchSearchData(search) {
+        try {
+            toggleSearchInitiated(true);
+            const response = await axios.get(`https://api.edamam.com/search?app_id=973f4fa3&app_key=d99e219fc4b58e878b793779677dd4ee&q=${search}`);
+            console.log(response.data.hits);
+            setRecipes(response.data.hits);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(`
+        search-field: ${searchField} 
+        `);
+        fetchSearchData(searchField);
+    }
+
     return (
         <>
             <Header>
                 <h1>Recipes.com homepage</h1>
             </Header>
 
+            <section className="outer-container">
+                <div className="inner-container" >
+                    <form onSubmit={handleSubmit} className=" search-bar" >
+                        <input
+                            type="text"
+                            name="search-field"
+                            placeholder="search recipe"
+                            id="search-field"
+                            className="search-field"
+                            value={searchField}
+                            onChange={(e) => setSearchField(e.target.value)}
+                        />
+                        <button type="submit" id="search-button" className="search-button">Search</button>
+                    </form>
+                </div>
+            </section>
             <main>
                 <section className="outer-container">
                     <div className="inner-container">
-                        <h2>Hottest recipes</h2>
-
+                        {(Object.keys(recipes).length === 0 && searchInitiated === true) && (
+                            <p id="search-not-found-p">Sorry we can't find recipes. Please try again or come back
+                                later</p>)}
                         {Object.keys(recipes).length > 0 && (
                             <>
                                 <div className="recipe-article-container">

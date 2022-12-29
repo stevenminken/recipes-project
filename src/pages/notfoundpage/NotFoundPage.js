@@ -11,14 +11,18 @@ const NotFound = () => {
             <Header>
                 <h1>Recipes.com notfoundpage</h1>
             </Header>
-            <div className="content">
-                <h2>Deze pagina kan niet worden gevonden</h2>
-                <h3>Keer terug naar het hoofdmenu</h3>
-                <button type="button"
-                    onClick={() => navigate("/")}>
-                    Hoofdmenu
-                </button>
-            </div>
+            <section className="outer-container">
+                <div className="inner-container">
+                    <div className="content">
+                        <h2>Deze pagina kan niet worden gevonden</h2>
+                        <h3>Keer terug naar het hoofdmenu</h3>
+                        <button type="button"
+                                onClick={() => navigate("/")}>
+                            Hoofdmenu
+                        </button>
+                    </div>
+                </div>
+            </section>
         </>
     );
 };
