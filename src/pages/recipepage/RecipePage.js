@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Header from "../../components/header/Header";
 import {useParams} from "react-router-dom";
 import axios from "axios";
+import './RecipePage.css';
 
 const RecipePage = () => {
     const [recipe, setRecipe] = useState({});

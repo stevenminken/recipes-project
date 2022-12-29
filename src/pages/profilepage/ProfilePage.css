@@ -1,0 +1,7 @@
+section {
+    display: flex;
+}
+
+label {
+    width: 200px;
+}
