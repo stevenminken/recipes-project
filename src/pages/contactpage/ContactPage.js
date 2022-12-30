@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import Header from "../../components/header/Header";
-
+// Verzend mail met nodemailer
+// https://www.npmjs.com/package/nodemailer-react
+// https://developers.google.com/recaptcha/docs/display
 const ContactPage = () => {
 
     const [firstname, setFirstname] = useState('');

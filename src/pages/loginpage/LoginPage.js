@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Header from "../../components/header/Header";
 import {Link} from "react-router-dom";
+import {AuthContext} from "../../context/AuthContext";
 
 const LoginPage = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const {login} = useContext(AuthContext);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -13,6 +15,7 @@ const LoginPage = () => {
     Email: ${email}, 
     Password: ${password}, 
     `);
+        login(email, password);
         console.log(`email: ${email}, password: ${password}`);
     }
 
