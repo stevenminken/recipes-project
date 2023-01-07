@@ -25,9 +25,6 @@ const RecipePage = () => {
     }, [id]);
     return (
         <>
-            <Header>
-                <h1>Recipes.com receptpagina</h1>
-            </Header>
             <main>
                 <section className="outer-container">
                     <div className="inner-container">

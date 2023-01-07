@@ -24,9 +24,6 @@ const ContactPage = () => {
 
     return (
         <>
-            <Header>
-                <h1>Recipes.com contactpage</h1>
-            </Header>
             <section className="outer-container">
                 <div className="inner-container">
                     <form onSubmit={handleSubmit}>

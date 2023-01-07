@@ -21,9 +21,6 @@ const LoginPage = () => {
 
     return (
         <>
-            <Header>
-                <h1>Recipes.com loginpage</h1>
-            </Header>
             <section className="outer-container">
                 <div className="inner-container">
                     <div>

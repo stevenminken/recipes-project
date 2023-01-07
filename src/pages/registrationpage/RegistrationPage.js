@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Header from "../../components/header/Header";
 import {Link, useNavigate} from "react-router-dom";
 import './RegistrationPage.css';
 
@@ -23,9 +22,6 @@ const RegistrationPage = () => {
 
     return (
         <>
-            <Header>
-                <h1>Recipes.com registrationPage</h1>
-            </Header>
             <section className="outer-container">
                 <div className="inner-container">
                     <div>

@@ -5,9 +5,6 @@ import './ProfilePage.css';
 const ProfilePage = () => {
     return (
         <>
-            <Header>
-                <h1>Recipes.com profile page</h1>
-            </Header>
             <main>
                 <section className="outer-container">
                     <div className="inner-container">
