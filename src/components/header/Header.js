@@ -3,16 +3,15 @@ import logo from '../../assets/logo.png';
 import {NavLink, useNavigate} from "react-router-dom";
 import './Header.css';
 import {AuthContext} from "../../context/AuthContext";
-import axios from "axios";
 
 const Header = ({
-                    children,
                     recipes,
                     setRecipes,
                     searchInitiated,
                     toggleSearchInitiated,
                     searchField,
-                    setSearchField
+                    setSearchField,
+                    fetchSearchData
                 }) => {
 
     const {isAuth, user, logout} = useContext(AuthContext);
@@ -24,25 +23,12 @@ const Header = ({
         console.log(dropdown);
     }
 
-    async function fetchSearchData(search) {
-
-        try {
-            const response = await axios.get(`https://api.edamam.com/api/recipes/v2?type=public&q=${search}&app_id=973f4fa3&app_key=d99e219fc4b58e878b793779677dd4ee&random=true`);
-            console.log(response.data.hits);
-            setRecipes(() => response.data.hits);
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
     function handleSubmit(e) {
         e.preventDefault();
         console.log(`
         search-field: ${searchField} 
         `);
-
         setSearchField(searchField);
-        // setRecipes(() => fetchSearchData(searchField));
         void fetchSearchData(searchField);
         toggleSearchInitiated(true);
     }
@@ -84,8 +70,9 @@ const Header = ({
                             {/*TODO actieve link corrigeren*/}
                             {isAuth && (
                                 <ul className="drop-down-container">
-                                    <li className="nav-username " onClick={() => dropdownHandler()}>welcome<br/>{user} <span
-                                        className="material-symbols-outlined">person</span>
+                                    <li className="nav-username " onClick={() => dropdownHandler()}>welcome<br/>{user}
+                                        <span
+                                            className="material-symbols-outlined">person</span>
                                     </li>
                                     {dropdown && (
                                         <>
@@ -105,9 +92,6 @@ const Header = ({
 
                         </ul>
                     </nav>
-                </div>
-                <div>
-                    {children}
                 </div>
             </div>
         </header>

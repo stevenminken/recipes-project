@@ -21,6 +21,21 @@ function App() {
     const [searchField, setSearchField] = useState('');
     const [searchInitiated, toggleSearchInitiated] = useState(false);
 
+    const API_ID = process.env.REACT_APP_API_ID;
+    const API_KEY = process.env.REACT_APP_API_KEY;
+
+    async function fetchSearchData(search) {
+
+        try {
+            const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${search}&app_id=${API_ID}&app_key=${API_KEY}&random=true`;
+            const response = await axios.get(uri);
+            console.log(response.data.hits);
+            setRecipes(() => response.data.hits);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     //TODO BEM of CSS modules
     //https://github.com/hogeschoolnovi/novi-educational-backend-documentation
     //mailer captcha
@@ -34,6 +49,7 @@ function App() {
                 toggleSearchInitiated={toggleSearchInitiated}
                 searchField={searchField}
                 setSearchField={setSearchField}
+                fetchSearchData={fetchSearchData}
                 >
             </Header>
             <Routes>
@@ -45,6 +61,7 @@ function App() {
                         toggleSearchInitiated={toggleSearchInitiated}
                         searchField={searchField}
                         setSearchField={setSearchField}
+                        fetchSearchData={fetchSearchData}
                     />}/>
                 <Route path="/recipe/:id" element={<RecipePage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>

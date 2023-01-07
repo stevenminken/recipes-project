@@ -3,29 +3,13 @@ import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import './HomePage.css';
 
-const HomePage = ({recipes, setRecipes, searchInitiated, toggleSearchInitiated, searchField, setSearchField}) => {
-
-    useEffect(() => {
-        console.log("de recepten zij gewijzigd homepage: ");
-    },[recipes])
-
-    async function fetchSearchData(search) {
-
-        try {
-            const response = await axios.get(`https://api.edamam.com/api/recipes/v2?type=public&q=${search}&app_id=973f4fa3&app_key=d99e219fc4b58e878b793779677dd4ee&random=true`);
-            console.log(response.data.hits);
-            setRecipes(response.data.hits);
-        } catch (err) {
-            console.error(err);
-        }
-    }
+const HomePage = ({recipes, setRecipes, searchInitiated, toggleSearchInitiated, searchField, setSearchField, fetchSearchData }) => {
 
     const navigate = useNavigate();
 
     // https://developer.edamam.com/
-    const APP_ID = "973f4fa3";
-    const API_KEY = "d99e219fc4b58e878b793779677dd4ee";
-
+    const API_ID = process.env.REACT_APP_API_ID;
+    const API_KEY = process.env.REACT_APP_API_KEY;
 
     function getRecipeId(uri) {
         const word = 'recipe_';
@@ -38,17 +22,16 @@ const HomePage = ({recipes, setRecipes, searchInitiated, toggleSearchInitiated, 
     }
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchInitialData() {
             try {
-                const response = await axios.get('https://api.edamam.com/api/recipes/v2?type=public&q=pizza&app_id=973f4fa3&app_key=d99e219fc4b58e878b793779677dd4ee');
+                const response = await axios.get(`https://api.edamam.com/api/recipes/v2?type=public&q=pizza&app_id=${API_ID}&app_key=${API_KEY}`);
                 console.log(response.data.hits);
                 setRecipes(response.data.hits);
             } catch (err) {
                 console.error(err);
             }
         }
-
-        fetchData();
+        void fetchInitialData();
     }, [])
 
     return (
@@ -93,7 +76,7 @@ const HomePage = ({recipes, setRecipes, searchInitiated, toggleSearchInitiated, 
                                 <button className="back-button" onClick={() => {
                                     setSearchField('');
                                     navigate("/");
-                                    setRecipes(fetchSearchData('dutch'));
+                                    setRecipes(fetchSearchData('italian'));
                                     console.log("button geklikt");
                                 }}>
                                     Back
