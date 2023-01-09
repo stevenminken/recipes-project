@@ -1,4 +1,4 @@
-import styles from  './App.module.css';
+import './App.css';
 import {Routes, Route, Navigate} from "react-router-dom";
 import RegistrationPage from "./pages/registrationpage/RegistrationPage";
 import HomePage from "./pages/homepage/HomePage";
@@ -31,22 +31,9 @@ function App() {
 
     return (
         <>
-            <Header
-                recipes={recipes}
-                setRecipes={setRecipes}
-                searchInitiated={searchInitiated}
-                toggleSearchInitiated={toggleSearchInitiated}
-                searchField={searchField}
-                setSearchField={setSearchField}
-                initialRenderHome={initialRenderHome}
-                toggleInitialRenderHome={toggleInitialRenderHome}
-                setSearchFieldTemp={setSearchFieldTemp}
-                searchFieldTemp={searchFieldTemp}
-                >
-            </Header>
-            <Routes>
-                <Route path="/" element={
-                    <HomePage
+            <div className="outer-container">
+                <div className="inner-container">
+                    <Header
                         recipes={recipes}
                         setRecipes={setRecipes}
                         searchInitiated={searchInitiated}
@@ -55,17 +42,35 @@ function App() {
                         setSearchField={setSearchField}
                         initialRenderHome={initialRenderHome}
                         toggleInitialRenderHome={toggleInitialRenderHome}
+                        setSearchFieldTemp={setSearchFieldTemp}
+                        searchFieldTemp={searchFieldTemp}
+                    >
+                    </Header>
+                    <Routes>
+                        <Route path="/" element={
+                            <HomePage
+                                recipes={recipes}
+                                setRecipes={setRecipes}
+                                searchInitiated={searchInitiated}
+                                toggleSearchInitiated={toggleSearchInitiated}
+                                searchField={searchField}
+                                setSearchField={setSearchField}
+                                initialRenderHome={initialRenderHome}
+                                toggleInitialRenderHome={toggleInitialRenderHome}
 
-                    />}/>
-                <Route path="/recipe/:id" element={<RecipePage/>}/>
-                <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/profile" element={isAuth === true ? <ProfilePage/> : <Navigate to="/"/>}/>
-                <Route path="/registration" element={<RegistrationPage/>}/>
-                <Route path="/contact" element={<ContactPage/>}/>
-                <Route path="*" element={<NotFoundPage/>}/>
-            </Routes>
-            <Footer/>
+                            />}/>
+                        <Route path="/recipe/:id" element={<RecipePage/>}/>
+                        <Route path="/login" element={<LoginPage/>}/>
+                        <Route path="/profile" element={isAuth === true ? <ProfilePage/> : <Navigate to="/"/>}/>
+                        <Route path="/registration" element={<RegistrationPage/>}/>
+                        <Route path="/contact" element={<ContactPage/>}/>
+                        <Route path="*" element={<NotFoundPage/>}/>
+                    </Routes>
+                    <Footer/>
+                </div>
+            </div>
         </>
     );
 }
+
 export default App;

@@ -42,10 +42,8 @@ h3 {
 }
 
 .outer-container {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  width: 100vw;
+  height: 100vh;
   background-color: var(--light-background);
 }
 
@@ -54,11 +52,12 @@ h3 {
   flex-shrink: 1;
   flex-grow: 0;
   /*We voegen margin toe aan de linker- en rechterkant, zodat de content nooit helemaal tegen de rand gedrukt kan worden*/
-  margin: 0 20px;
+  margin: 0 40px;
   /*We zorgen er ook voor dat deze flex-item op haar beurt ook weer een flexbox container is, waarin alle children onder elkaar komen te staan*/
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 footer {
