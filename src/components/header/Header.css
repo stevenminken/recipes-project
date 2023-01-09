@@ -27,6 +27,34 @@ NavLink {
     list-style: none;
 }
 
+.drop-down-nav {
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+.drop-down-nav-open {
+    display: flex;
+    position: relative;
+    color: green;
+    top: 30px;
+    align-items: center;
+    height: 40px;
+}
+
+.drop-down-items {
+    display: flex;
+    flex-direction: column;
+}
+.drop-down-item {
+    height: 1.5em;
+    width: 70px;
+    border: 1px solid black;
+}
+
+.person-icon {
+    display: flex;
+    /*align-content: center;*/
+}
 .active-link {
     border-bottom: solid blue 1px;
 }
@@ -50,8 +78,9 @@ NavLink {
     align-items: flex-end;
 }
 
-.drop-down-item {
-    height: 1.5em;
-    width: 70px;
-    border: 1px solid black;
+
+
+.search-button {
+    display: flex;
+    align-items: center;
 }

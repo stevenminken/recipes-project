@@ -3,7 +3,17 @@ import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import './HomePage.css';
 
-const HomePage = ({recipes, setRecipes, searchInitiated, toggleSearchInitiated, searchField, setSearchField, fetchSearchData }) => {
+const HomePage = ({
+                      recipes,
+                      setRecipes,
+                      searchInitiated,
+                      toggleSearchInitiated,
+                      searchField,
+                      setSearchField,
+                      fetchSearchData,
+                      initialRenderHome,
+                      toggleInitialRenderHome
+                  }) => {
 
     const navigate = useNavigate();
 
@@ -17,11 +27,11 @@ const HomePage = ({recipes, setRecipes, searchInitiated, toggleSearchInitiated, 
         const length = word.length;
         const result = uri.slice(index + length);
 
-        console.log("getRecipeId: " + result);
         return result;
     }
 
     useEffect(() => {
+
         async function fetchInitialData() {
             try {
                 const response = await axios.get(`https://api.edamam.com/api/recipes/v2?type=public&q=pizza&app_id=${API_ID}&app_key=${API_KEY}`);
@@ -31,8 +41,32 @@ const HomePage = ({recipes, setRecipes, searchInitiated, toggleSearchInitiated, 
                 console.error(err);
             }
         }
-        void fetchInitialData();
-    }, [])
+
+        if (initialRenderHome === true) {
+            console.log("initial effect getriggered");
+            void fetchInitialData();
+            toggleInitialRenderHome(false);
+        }
+
+
+    }, [initialRenderHome])
+
+    useEffect(() => {
+
+        async function fetchSearchData(search) {
+
+
+            try {
+                const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${search}&app_id=${API_ID}&app_key=${API_KEY}&random=true`;
+                const response = await axios.get(uri);
+                setRecipes(() => response.data.hits);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        console.log("effect getriggered");
+        void fetchSearchData(searchField);
+    }, [searchField]);
 
     return (
         <>
@@ -48,7 +82,6 @@ const HomePage = ({recipes, setRecipes, searchInitiated, toggleSearchInitiated, 
                                     {recipes.map((listItem) => {
                                         return (
                                             <>
-                                                {console.log(listItem.recipe.uri)}
                                                 <article className="recipe-article"
                                                          key={getRecipeId(listItem.recipe.uri)}>
                                                     <img src={listItem.recipe.image} alt={listItem.recipe.label}
@@ -76,7 +109,7 @@ const HomePage = ({recipes, setRecipes, searchInitiated, toggleSearchInitiated, 
                                 <button className="back-button" onClick={() => {
                                     setSearchField('');
                                     navigate("/");
-                                    setRecipes(fetchSearchData('italian'));
+                                    setSearchField('');
                                     console.log("button geklikt");
                                 }}>
                                     Back
@@ -89,8 +122,6 @@ const HomePage = ({recipes, setRecipes, searchInitiated, toggleSearchInitiated, 
                     (<section className="outer-container">
                             <div className="inner-container button-container">
                                 <button className="more-button" onClick={() => {
-                                    setRecipes(fetchSearchData(searchField));
-                                    console.log("we zijn  hier " + recipes);
                                     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                                 }
                                 }>More

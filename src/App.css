@@ -1,4 +1,6 @@
-/*TODO import lettertypes(s) @import url('');*/
+@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400;700&family=Heebo:wght@300;400;600&display=swap');
+/*font-family: 'Domine', serif;*/
+/*font-family: 'Heebo', sans-serif;*/
 
 * {
   margin: 0;
@@ -6,11 +8,45 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: 'Domine', serif;
+  font-weight: 300;
+  color: var(--black);
+}
+
+:root {
+  --primary: #40c9a2;
+  --primary-variant-dark: #2f9c95;
+  --primary-variant-light: #a3f7b5 ;
+  --light-background: #e5f9e0;
+  --red: #960200;
+  --secondary: #664147;
+  --black: #000000;
+  --white: #FFFFFF;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Heebo', sans-serif;
+}
+
+h1 {
+  font-size: 65px;
+}
+
+h2 {
+  font-size: 42px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
 .outer-container {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  background-color: var(--light-background);
 }
 
 .inner-container {
@@ -23,6 +59,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+footer {
+  color: var(--white);
+  background-color: var(--primary-variant-light);
 }
 
 
