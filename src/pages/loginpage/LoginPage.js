@@ -2,12 +2,20 @@ import React, {useContext, useState} from 'react';
 import Header from "../../components/header/Header";
 import {Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
+import styles from  './LoginPage.module.css';
 
 const LoginPage = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {login} = useContext(AuthContext);
+
+    // axios.get('https://...', {
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         "Authorization": "Bearer xxxxx.yyyyy.zzzzz",
+    //     },
+    // });
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -21,8 +29,8 @@ const LoginPage = () => {
 
     return (
         <>
-            <section className="outer-container">
-                <div className="inner-container">
+            <section className={styles['outer-container']}>
+                <div className={styles['inner-container']}>
                     <div>
                         <h2>Don't have an account?<Link to={'/registration'}> Sign Up</Link></h2>
                     </div>

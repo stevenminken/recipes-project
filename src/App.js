@@ -1,4 +1,4 @@
-import './App.css';
+import styles from  './App.module.css';
 import {Routes, Route, Navigate} from "react-router-dom";
 import RegistrationPage from "./pages/registrationpage/RegistrationPage";
 import HomePage from "./pages/homepage/HomePage";
@@ -6,16 +6,18 @@ import RecipePage from "./pages/recipepage/RecipePage";
 import LoginPage from "./pages/loginpage/LoginPage";
 import ProfilePage from "./pages/profilepage/ProfilePage";
 import NotFoundPage from "./pages/notfoundpage/NotFoundPage";
-import ContactPage from "./pages/contactpage/ContactPage";
+import ContactPage from "./pages/contactpage/ContactPage.module";
 import Footer from "./components/footer/Footer";
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "./context/AuthContext";
 import axios from "axios";
 import Header from "./components/header/Header";
+import jwt_decode from 'jwt-decode';
 
 function App() {
 
     const {isAuth} = useContext(AuthContext);
+    // const token = AAAABBBBBCCCC;
 
     const [recipes, setRecipes] = useState([]);
     const [searchFieldTemp, setSearchFieldTemp] = useState('');

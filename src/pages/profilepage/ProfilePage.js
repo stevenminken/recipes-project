@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from "../../components/header/Header";
-import './ProfilePage.css';
+import styles from  './ProfilePage.module.css';
 
 const ProfilePage = () => {
     return (
         <>
             <main>
-                <section className="outer-container">
-                    <div className="inner-container">
+                <section className={styles['outer-container']}>
+                    <div className={styles['inner-container']}>
                         <section>
                             <label htmlFor="email-field">Email</label>
                             <p id="email-field"

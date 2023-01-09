@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
-import './HomePage.css';
+import styles from  './HomePage.module.css';
 
 const HomePage = ({
                       recipes,
@@ -71,18 +71,18 @@ const HomePage = ({
     return (
         <>
             <main>
-                <section className="outer-container">
-                    <div className="inner-container">
+                <section className={styles['outer-container']}>
+                    <div className={styles['inner-container']}>
                         {(Object.keys(recipes).length === 0 && searchInitiated === true) && (
                             <p id="search-not-found-p">Sorry we can't find recipes. Please try again or come back
                                 later</p>)}
                         {Object.keys(recipes).length > 0 && (
                             <>
-                                <div className="recipe-article-container">
+                                <div className={styles['recipe-article-container']}>
                                     {recipes.map((listItem) => {
                                         return (
                                             <>
-                                                <article className="recipe-article"
+                                                <article className={styles['recipe-article']}
                                                          key={getRecipeId(listItem.recipe.uri)}>
                                                     <img src={listItem.recipe.image} alt={listItem.recipe.label}
                                                          width="150px"/>
@@ -104,9 +104,9 @@ const HomePage = ({
                     </div>
                 </section>
                 {(Object.keys(recipes).length === 0 && searchInitiated === true) &&
-                    (<section className="outer-container">
-                            <div className="inner-container button-container">
-                                <button className="back-button" onClick={() => {
+                    (<section className={styles['outer-container']}>
+                            <div className={styles['inner-container button-container']}>
+                                <button className={styles['back-button']} onClick={() => {
                                     setSearchField('');
                                     navigate("/");
                                     setSearchField('');
@@ -119,9 +119,9 @@ const HomePage = ({
                         </section>
                     )}
                 {(Object.keys(recipes).length !== 0) &&
-                    (<section className="outer-container">
-                            <div className="inner-container button-container">
-                                <button className="more-button" onClick={() => {
+                    (<section className={styles['outer-container']}>
+                            <div className={styles['inner-container button-container']}>
+                                <button className={styles['more-button']} onClick={() => {
                                     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                                 }
                                 }>More

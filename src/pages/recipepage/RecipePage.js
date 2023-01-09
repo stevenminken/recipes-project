@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Header from "../../components/header/Header";
 import {useParams} from "react-router-dom";
 import axios from "axios";
-import './RecipePage.css';
+import styles from  './RecipePage.module.css';
 
 const RecipePage = () => {
     const [recipe, setRecipe] = useState({});
@@ -26,8 +26,8 @@ const RecipePage = () => {
     return (
         <>
             <main>
-                <section className="outer-container">
-                    <div className="inner-container">
+                <section className={styles['outer-container']}>
+                    <div className={styles['inner-container']}>
                         {Object.keys(recipe).length > 0 && (
                             <div>
                                 <img src={recipe.image} width="300px"/>

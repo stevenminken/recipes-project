@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import logo from '../../assets/logo.png';
 import {NavLink, useNavigate} from "react-router-dom";
-import './Header.css';
+import styles from './Header.module.css';
 import {AuthContext} from "../../context/AuthContext";
 
 const Header = ({
@@ -35,14 +35,15 @@ const Header = ({
         search-field: ${searchFieldTemp} 
         `);
         setSearchField(searchFieldTemp);
+        navigate('/');
         toggleSearchInitiated(true);
     }
 
     return (
-        <header className="outer-container">
-            <div className="inner-container">
-                <div className="header">
-                    <img src={logo} alt="Recipes.com logo" className="logo" onClick={() => {
+        <header className={styles['outer-container']}>
+            <div className={styles['inner-container']}>
+                <div className={styles['header']}>
+                    <img src={logo} alt="Recipes.com logo" className={styles['logo']} onClick={() => {
                         // document.getElementById("search-field").value = '';
                         setSearchFieldTemp('');
                         void toggleInitialRenderHome(true);
@@ -50,60 +51,61 @@ const Header = ({
 
                         navigate('/')
                     }}/>
-                    <form onSubmit={handleSubmit} className=" search-bar">
+                    <form onSubmit={handleSubmit} className={styles['search-bar']}>
                         <input
                             type="text"
                             name="search-field"
                             placeholder="search recipe"
                             id="search-field"
-                            className="search-field"
+                            className={styles['search-field']}
                             value={searchFieldTemp}
                             onChange={(e) => setSearchFieldTemp(e.target.value)}
                             onMouseDown={(e) => toggleSearchInitiated(false)}
                         />
-                        <button type="submit" id="search-button" className="search-button"><span className="material-symbols-outlined">search</span>Search</button>
+                        <button type="submit" id="search-button" className={styles['search-button']}><span
+                            className={styles['material-symbols-outlined']}>Search</span>
+                        </button>
 
                     </form>
 
                     {/*TODO NAVIGATION component*/}
-                    <nav className="nav-bar">
+                    <nav className={styles['nav-bar']}>
                         <ul>
                             {/*TODO styling*/}
                             {!isAuth && (
                                 <li><NavLink to="/login"
-                                             className={({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Login</NavLink>
+                                             className={({isActive}) => isActive === true ? styles['active-link'] : styles['default-link']}> Login < /NavLink>
                                 </li>
                             )}
                             {/*TODO actieve link corrigeren*/}
                             {isAuth && (
-                                <div className={dropdownOpen ? "drop-down-nav-open" : "drop-down-nav"}>
-                                    <ul className="drop-down-container">
-                                        <li className="nav-username "
-                                            >welcome<br/>{user}
+                                <li
+                                    className={dropdownOpen ? styles['drop-down-nav-open'] : styles['drop-down-nav']}>
+                                    <ul className={styles['drop-down-container']}>
+                                        <li className={styles['nav-username']}
+                                        >welcome<br/>{user}
                                         </li>
                                         {dropdown && (
-                                            <div className="drop-down-items">
-                                                <li className="drop-down-item"><NavLink to="/profile"
-                                                                                        className={({isActive}) => isActive === true ? 'active-link' : 'default-link'}
-                                                                                        onClick={() => navigate("/profile")}>Profile</NavLink>
+                                            <div className={styles['drop-down-items']}>
+                                                <li className={styles['drop-down-item']}><NavLink to="/profile"
+                                                                                                  className={({isActive}) => isActive === true ? styles['active-link'] : styles['default-link']}
+                                                                                                  onClick={() => navigate("/profile")}>Profile</NavLink>
                                                 </li>
                                                 <li className="drop-down-item"><NavLink to="/"
-                                                                                        className={({isActive}) => isActive === true ? 'active-link' : 'default-link'}
+                                                                                        className={({isActive}) => isActive === true ? styles['active-link'] : styles['default-link']}
                                                                                         onClick={logout}>Logout</NavLink>
                                                 </li>
                                             </div>)}
                                     </ul>
                                     <span
-                                        className="material-symbols-outlined person-icon" onClick={() => dropdownHandler()}>person
-                                </span>
-                                </div>
-                            )}
+                                        className='material-symbols-outlined person-icon'
+                                        onClick={() => dropdownHandler()}>person</span>
+                                </li>)}
                         </ul>
                     </nav>
-                    <div/>
                 </div>
             </div>
-        </header>)}
+        </header>)
+}
 
-
-    export default Header;
+export default Header;

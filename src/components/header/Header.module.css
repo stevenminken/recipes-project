@@ -78,9 +78,20 @@ NavLink {
     align-items: flex-end;
 }
 
+.search-bar {
+    display: flex;
+    height: 30px;
+}
 
+.search-field {
+    width: 60vw;
+}
 
 .search-button {
     display: flex;
+    justify-content: center;
     align-items: center;
+    background-color:cornflowerblue;
+    color: var(--white);
+    width: 80px;
 }

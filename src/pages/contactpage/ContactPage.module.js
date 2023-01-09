@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Header from "../../components/header/Header";
+import styles from  './ContactPage.module.css'
 // Verzend mail met nodemailer
 // https://www.npmjs.com/package/nodemailer-react
 // https://developers.google.com/recaptcha/docs/display
@@ -24,8 +25,8 @@ const ContactPage = () => {
 
     return (
         <>
-            <section className="outer-container">
-                <div className="inner-container">
+            <section className={styles['outer-container']}>
+                <div className={styles['inner-container']}>
                     <form onSubmit={handleSubmit}>
                         <section>
                             <label htmlFor="firstname-field">First Name</label>

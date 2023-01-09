@@ -1,0 +1,17 @@
+/*.content {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    margin-top: 200px;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
+
+.outer-container {
+    background-color: var(--light-background);
+    padding: 140px 0;
+    text-align: left;
+}
+
+.page-not-found-inner-container {
+
+}

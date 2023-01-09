@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import './RegistrationPage.css';
+import styles from  './RegistrationPage.module.css';
 
 const RegistrationPage = () => {
 
@@ -8,6 +8,15 @@ const RegistrationPage = () => {
     const [password, setPassword] = useState('');
     const [newsletter, toggleNewsletter] = useState(false);
     const [agreeTerms, toggleAgreeTerms] = useState(false);
+
+    // axios.post('https://...', {
+    //     comment: 'Super lekker recept!',
+    // }, {
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         "Authorization": "Bearer xxxxx.yyyyy.zzzzz",
+    //     },
+    // });
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -22,8 +31,8 @@ const RegistrationPage = () => {
 
     return (
         <>
-            <section className="outer-container">
-                <div className="inner-container">
+            <section className={styles['outer-container']}>
+                <div className={styles['inner-container']}>
                     <div>
                         <h2>Already have an account? Click: <Link to={'/login'}>here</Link></h2>
                     </div>
