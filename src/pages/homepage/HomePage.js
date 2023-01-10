@@ -100,8 +100,8 @@ const HomePage = ({
                 </>
             )}
             {(Object.keys(recipes).length === 0 && searchInitiated === true) &&
-                (<section className={styles['outer-container']}>
-                        <div className={styles['inner-container button-container']}>
+                (<section>
+                        <div className={styles['button-container']}>
                             <button className={styles['back-button']} onClick={() => {
                                 setSearchField('');
                                 navigate("/");
@@ -110,19 +110,17 @@ const HomePage = ({
                             }}>
                                 Back
                             </button>
-
                         </div>
                     </section>
                 )}
             {(Object.keys(recipes).length !== 0) &&
-                (<section className={styles['outer-container']}>
-                        <div className={styles['inner-container button-container']}>
+                (<section>
+                        <div className={styles['button-container']}>
                             <button className={styles['more-button']} onClick={() => {
                                 window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                             }
                             }>More
                             </button>
-
                         </div>
                     </section>
                 )}

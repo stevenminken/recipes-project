@@ -23,37 +23,16 @@ li {
 .header-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    height: 200px;
+    align-items: flex-start;
+    height: 100px;
+    margin-top: 50px;
+
+    /*development mode*/
     border: solid black 2px;
 }
 
 NavLink {
     list-style: none;
-}
-
-.drop-down-nav {
-    display: flex;
-    align-items: center;
-    height: 40px;
-}
-.drop-down-nav-open {
-    display: flex;
-    position: relative;
-    color: green;
-    top: 30px;
-    align-items: center;
-    height: 40px;
-}
-
-.drop-down-items {
-    display: flex;
-    flex-direction: column;
-}
-.drop-down-item {
-    height: 1.5em;
-    width: 70px;
-    border: 1px solid black;
 }
 
 .person-icon {
@@ -68,28 +47,31 @@ NavLink {
     color: black;
 }
 
-.nav-username {
+.nav-username-open {
     color: black;
     font-size: 16px;
+    position: relative;
+    right: 0px;
+}
+
+.nav-username-closed {
+    color: black;
+    font-size: 16px;
+    position: relative;
+    right: 45px;
 }
 
 .person-icon {
     margin-left: 5px;
 }
 
-.drop-down-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
 .search-bar {
     display: flex;
-    height: 30px;
+    height: 2em;
 }
 
 .search-field {
-    width: 60vw;
+    width: 600px;
 }
 
 .search-button {

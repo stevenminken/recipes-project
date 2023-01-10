@@ -3,11 +3,16 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
-    background-color: cornflowerblue;
+    height: 160px;
+    background-color: var(--primary);
 }
 
 .footer-contact-link {
     text-decoration: none;
     color: black;
+}
+
+footer > p {
+    padding-top: 20px;
+    padding-bottom: 30px;
 }
