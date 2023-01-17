@@ -16,8 +16,8 @@
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 25px;
-    margin: 60px 0 0 0;
+    gap: 75px;
+    margin: 40px 0 0 0;
 }
 
 .search-bar {

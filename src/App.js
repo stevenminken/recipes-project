@@ -13,6 +13,7 @@ import {AuthContext} from "./context/AuthContext";
 import axios from "axios";
 import Header from "./components/header/Header";
 import jwt_decode from 'jwt-decode';
+import NavBar from "./components/navbar/NavBar";
 
 function App() {
 
@@ -32,6 +33,18 @@ function App() {
         <>
             <div className="outer-container">
                 <div className="inner-container">
+                    <NavBar
+                        recipes={recipes}
+                        setRecipes={setRecipes}
+                        searchInitiated={searchInitiated}
+                        toggleSearchInitiated={toggleSearchInitiated}
+                        searchField={searchField}
+                        setSearchField={setSearchField}
+                        initialRenderHome={initialRenderHome}
+                        toggleInitialRenderHome={toggleInitialRenderHome}
+                        setSearchFieldTemp={setSearchFieldTemp}
+                        searchFieldTemp={searchFieldTemp}
+                    />
                     <Header
                         recipes={recipes}
                         setRecipes={setRecipes}
@@ -43,7 +56,7 @@ function App() {
                         toggleInitialRenderHome={toggleInitialRenderHome}
                         setSearchFieldTemp={setSearchFieldTemp}
                         searchFieldTemp={searchFieldTemp}
-                   />
+                    />
                     <Routes>
                         <Route path="/" element={
                             <HomePage
@@ -59,7 +72,9 @@ function App() {
                             />}/>
                         <Route path="/recipe/:id" element={<RecipePage/>}/>
                         <Route path="/login" element={<LoginPage/>}/>
-                        <Route path="/profile" element={isAuth === true ? <ProfilePage  setSearchField={setSearchField}/> : <Navigate to="/"/>}/>
+                        <Route path="/profile"
+                               element={isAuth === true ? <ProfilePage setSearchField={setSearchField}/> :
+                                   <Navigate to="/"/>}/>
                         <Route path="/registration" element={<RegistrationPage/>}/>
                         <Route path="/contact" element={<ContactPage/>}/>
                         <Route path="*" element={<NotFoundPage/>}/>

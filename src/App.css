@@ -44,15 +44,16 @@ h3 {
 .outer-container {
   width: 100vw;
   height: 100vh;
-  background-color: var(--light-background);
+  /*background-color: var(--light-background);*/
 }
 
 .inner-container {
-  flex-basis: 1200px;
+  flex-basis: 1440px;
   flex-shrink: 1;
   flex-grow: 0;
   /*We voegen margin toe aan de linker- en rechterkant, zodat de content nooit helemaal tegen de rand gedrukt kan worden*/
-  margin: 0 40px;
+  margin-left: 80px;
+  margin-right: 80px;
   /*We zorgen er ook voor dat deze flex-item op haar beurt ook weer een flexbox container is, waarin alle children onder elkaar komen te staan*/
   height: 100vh;
   display: flex;

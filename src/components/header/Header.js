@@ -1,8 +1,6 @@
 import React, {useContext, useState} from 'react';
-import logo from '../../assets/logo.png';
 import styles from './Header.module.css';
 import {AuthContext} from "../../context/AuthContext";
-import Dropdown from "../dropdown/Dropdown";
 import {useNavigate} from "react-router-dom";
 
 const Header = ({
@@ -35,42 +33,22 @@ const Header = ({
     }
 
     return (
-        <header className={styles['header']}>
-            <div className={styles['header-container']}>
-                <img src={logo} alt="Recipes.com logo" className={styles['logo']} onClick={() => {
-                    // document.getElementById("search-field").value = '';
-                    setSearchFieldTemp('');
-                    void toggleInitialRenderHome(true);
-                    navigate('/')
-                }}/>
-                <form onSubmit={handleSubmit} className={styles['search-bar']}>
-                    <input
-                        type="text"
-                        name="search-field"
-                        placeholder="search recipe"
-                        id="search-field"
-                        className={styles['search-field']}
-                        value={searchFieldTemp}
-                        onChange={(e) => setSearchFieldTemp(e.target.value)}
-                        onMouseDown={(e) => toggleSearchInitiated(false)}
-                    />
-                    <button type="submit" id="search-button" className={styles['search-button']}><span
-                        className={styles['material-symbols-outlined']}>Search</span>
-                    </button>
-                </form>
-                {/*TODO NAVIGATION component*/}
-
-                {/*    <div className={isOpen ? styles['nav-username-open']: styles['nav-username-closed']}*/}
-                {isAuth && (
-                    <p>welcome<br/>{user.username}
-                    </p>
-                )}
-                <div>
-                    <nav className={styles['nav-bar']}>
-                        <Dropdown setSearchField={setSearchField} isOpen={isOpen} setIsOpen={setIsOpen}/>
-                    </nav>
-                </div>
-            </div>
+        <header className={styles['header-container']}>
+            <form onSubmit={handleSubmit} className={styles['search-bar']}>
+                <input
+                    type="text"
+                    name="search-field"
+                    placeholder="search recipe"
+                    id="search-field"
+                    className={styles['search-field']}
+                    value={searchFieldTemp}
+                    onChange={(e) => setSearchFieldTemp(e.target.value)}
+                    onMouseDown={(e) => toggleSearchInitiated(false)}
+                />
+                <button type="submit" id="search-button" className={styles['search-button']}><span
+                    className={styles['material-symbols-outlined']}>Search</span>
+                </button>
+            </form>
         </header>
     )
 }

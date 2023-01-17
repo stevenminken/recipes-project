@@ -37,10 +37,14 @@ const RegistrationPage = () => {
     }
 
     return (
-        <main>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email-field">
-                    Email:
+        <main className={styles['main-element']}>
+            <div className={styles['text-div']}>
+                <h2>Already have an account?<Link to={'/login'}> Login</Link></h2>
+            </div>
+            <form onSubmit={handleSubmit} className={styles['form']}>
+                <section>
+                    <label htmlFor="email-field">
+                        Email: </label>
                     <input
                         name="email"
                         id="email-field"
@@ -48,18 +52,20 @@ const RegistrationPage = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                </label>
-                <label htmlFor="username-field">
-                    Gebruikersnaam:
+                </section>
+                <section>
+                    <label htmlFor="username-field">
+                        Username: </label>
                     <input
                         type="text"
                         id="username-field"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                </label>
-                <label htmlFor="password-field">
-                    Password:
+                </section>
+                <section>
+                    <label htmlFor="password-field">
+                        Password: </label>
                     <input
                         name="password"
                         id="password-field"
@@ -67,7 +73,7 @@ const RegistrationPage = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                </label>
+                </section>
                 {/*<label htmlFor="newsletter-field">Newsletter</label>*/}
                 {/*<input*/}
                 {/*    type="checkbox"*/}
@@ -84,11 +90,12 @@ const RegistrationPage = () => {
                 {/*    value={agreeTerms}*/}
                 {/*    onChange={(e) => toggleAgreeTerms(e.target.checked)}*/}
                 {/*/>*/}
-                <button type="submit">
-                    Submit
-                </button>
+                <section className={styles['button-section']}>
+                    <button type="submit" className={styles['registration-button']}>
+                        Submit
+                    </button>
+                </section>
             </form>
-            <p>Heb je al een account? Je kunt je <Link to="/login">hier</Link> inloggen.</p>
         </main>
     );
 };

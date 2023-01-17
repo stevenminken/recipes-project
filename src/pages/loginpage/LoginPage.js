@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
+import styles from './LoginPage.module.css';
 
 const LoginPage = () => {
 
@@ -29,11 +30,11 @@ const LoginPage = () => {
     }
 
     return (
-        <main>
-            <div>
+        <main className={styles['main-element']}>
+            <div className={styles['text-div']}>
                 <h2>Don't have an account?<Link to={'/registration'}> Sign Up</Link></h2>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={styles['form']}>
                 <section>
                     <label htmlFor="email-field">Email</label>
                     <input
@@ -54,11 +55,13 @@ const LoginPage = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </section>
-                {error && <p className="error">Combinatie van email adres en wachtwoord is onjuist</p>}
-                <button type="submit">Submit</button>
+                {error &&
+                    <section><p className="error">Combination of email and password is not correct</p></section>}
+                <section className={styles['button-section']}>
+                    <button type="submit" className={styles['login-button']}>Submit</button>
+                </section>
                 {/*    TODO password vergeten*/}
             </form>
-            <p>Heb je nog geen account? <Link to="/registration">Registreer</Link> je dan eerst.</p>
         </main>
     )
 };
