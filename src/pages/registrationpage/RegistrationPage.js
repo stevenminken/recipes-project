@@ -1,42 +1,46 @@
 import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
+import axios from 'axios';
 import styles from './RegistrationPage.module.css';
 
 const RegistrationPage = () => {
 
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const [error, toggleError] = useState(false);
+    const [loading, toggleLoading] = useState(false);
+
     const [newsletter, toggleNewsletter] = useState(false);
     const [agreeTerms, toggleAgreeTerms] = useState(false);
+    const navigate = useNavigate();
 
-    // axios.post('https://...', {
-    //     comment: 'Super lekker recept!',
-    // }, {
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //         "Authorization": "Bearer xxxxx.yyyyy.zzzzz",
-    //     },
-    // });
-
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        console.log(`
-    Email: ${email}, 
-    Password: ${password}, 
-        Newsletter: ${newsletter},
-    TermsAndConditions: ${agreeTerms}
-    `);
-        console.log(`email: ${email}, password: ${password}, Newsletter: ${newsletter}, TermsAndConditions: ${agreeTerms}`);
+        toggleError(false);
+        toggleLoading(true);
+
+        try {
+            await axios.post(`http://localhost:3000/register`, {
+                email: email,
+                password: password,
+                username: username,
+            });
+            navigate('/login');
+        } catch (e) {
+            console.error(e);
+            toggleError(true);
+        }
+
+        toggleLoading(false);
     }
 
     return (
         <main>
-            <div>
-                <h2>Already have an account? Click: <Link to={'/login'}>here</Link></h2>
-            </div>
             <form onSubmit={handleSubmit}>
-                <section>
-                    <label htmlFor="email-field">Email</label>
+                <label htmlFor="email-field">
+                    Email:
                     <input
                         name="email"
                         id="email-field"
@@ -44,9 +48,18 @@ const RegistrationPage = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                </section>
-                <section>
-                    <label htmlFor="password-field">Password</label>
+                </label>
+                <label htmlFor="username-field">
+                    Gebruikersnaam:
+                    <input
+                        type="text"
+                        id="username-field"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </label>
+                <label htmlFor="password-field">
+                    Password:
                     <input
                         name="password"
                         id="password-field"
@@ -54,29 +67,28 @@ const RegistrationPage = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                </section>
-                <section>
-                    <label htmlFor="newsletter-field">Newsletter</label>
-                    <input
-                        type="checkbox"
-                        name="agree"
-                        id="agree-field"
-                        value={newsletter}
-                        onChange={(e) => toggleNewsletter(e.target.checked)}
-                    />
-                </section>
-                <section>
-                    <label htmlFor="agree-field">I accept the terms and conditions</label>
-                    <input
-                        type="checkbox"
-                        name="agree"
-                        id="agree-field"
-                        value={agreeTerms}
-                        onChange={(e) => toggleAgreeTerms(e.target.checked)}
-                    />
-                </section>
-                <button type="submit">Submit</button>
+                </label>
+                {/*<label htmlFor="newsletter-field">Newsletter</label>*/}
+                {/*<input*/}
+                {/*    type="checkbox"*/}
+                {/*    name="agree"*/}
+                {/*    id="agree-field"*/}
+                {/*    value={newsletter}*/}
+                {/*    onChange={(e) => toggleNewsletter(e.target.checked)}*/}
+                {/*/>*/}
+                {/*<label htmlFor="agree-field">I accept the terms and conditions</label>*/}
+                {/*<input*/}
+                {/*    type="checkbox"*/}
+                {/*    name="agree"*/}
+                {/*    id="agree-field"*/}
+                {/*    value={agreeTerms}*/}
+                {/*    onChange={(e) => toggleAgreeTerms(e.target.checked)}*/}
+                {/*/>*/}
+                <button type="submit">
+                    Submit
+                </button>
             </form>
+            <p>Heb je al een account? Je kunt je <Link to="/login">hier</Link> inloggen.</p>
         </main>
     );
 };

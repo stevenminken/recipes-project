@@ -21,3 +21,11 @@
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
+.drop-down-item {
+    background-color: var(--primary-variant-dark);
+}
+
+NavLink {
+    color: var(--white);
+}

@@ -1,30 +1,31 @@
 import React, {useContext, useState} from 'react';
-import Header from "../../components/header/Header";
 import {Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
-import styles from './LoginPage.module.css';
+import axios from "axios";
 
 const LoginPage = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {login} = useContext(AuthContext);
+    const [error, toggleError] = useState(false);
+    const {login, user} = useContext(AuthContext);
 
-    // axios.get('https://...', {
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //         "Authorization": "Bearer xxxxx.yyyyy.zzzzz",
-    //     },
-    // });
-
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        console.log(`
-    Email: ${email}, 
-    Password: ${password}, 
-    `);
-        login(email, password);
-        console.log(`email: ${email}, password: ${password}`);
+        toggleError(false);
+
+        try {
+            const result = await axios.post(`http://localhost:3000/login`, {
+                email: email,
+                password: password,
+            });
+
+            login(result.data.accessToken);
+
+        } catch (e) {
+            console.error(e);
+            toggleError(true);
+        }
     }
 
     return (
@@ -53,11 +54,13 @@ const LoginPage = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </section>
+                {error && <p className="error">Combinatie van email adres en wachtwoord is onjuist</p>}
                 <button type="submit">Submit</button>
                 {/*    TODO password vergeten*/}
             </form>
+            <p>Heb je nog geen account? <Link to="/registration">Registreer</Link> je dan eerst.</p>
         </main>
-    );
+    )
 };
 
 export default LoginPage;

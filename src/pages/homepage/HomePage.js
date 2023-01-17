@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import styles from './HomePage.module.css';
+import loginPage from "../loginpage/LoginPage";
 
 const HomePage = ({
                       recipes,
@@ -21,13 +22,17 @@ const HomePage = ({
     const API_ID = process.env.REACT_APP_API_ID;
     const API_KEY = process.env.REACT_APP_API_KEY;
 
+    function getUniqueKey() {
+        return Date.now() + Math.random().toString(36).substring(2, 15)
+    }
+
     function getRecipeId(uri) {
         const word = 'recipe_';
         const index = uri.indexOf(word);
         const length = word.length;
         const result = uri.slice(index + length);
 
-        return result;
+        return result
     }
 
     useEffect(() => {
@@ -55,7 +60,6 @@ const HomePage = ({
 
         async function fetchSearchData(search) {
 
-
             try {
                 const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${search}&app_id=${API_ID}&app_key=${API_KEY}&random=true`;
                 const response = await axios.get(uri);
@@ -81,7 +85,7 @@ const HomePage = ({
                             return (
                                 <>
                                     <article className={styles['recipe-article']}
-                                             key={getRecipeId(listItem.recipe.uri)}>
+                                             key={getUniqueKey()}>
                                         <img src={listItem.recipe.image} alt={listItem.recipe.label}
                                              width="150px"/>
                                         <h5>{listItem.recipe.dishType}</h5>
@@ -90,7 +94,7 @@ const HomePage = ({
                                         <span>
                                                     <p><Link
                                                         to={`/recipe/${getRecipeId(listItem.recipe.uri)}`}>{listItem.recipe.label}</Link></p>
-                                                    <p>STAR RATING TODO</p>
+                                                    {/*<p>STAR RATING TODO</p>*/}
                                                 </span>
                                     </article>
                                 </>

@@ -1,9 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import logo from '../../assets/logo.png';
-import {NavLink, useNavigate} from "react-router-dom";
 import styles from './Header.module.css';
 import {AuthContext} from "../../context/AuthContext";
 import Dropdown from "../dropdown/Dropdown";
+import {useNavigate} from "react-router-dom";
 
 const Header = ({
                     recipes,
@@ -21,7 +21,7 @@ const Header = ({
 
     const {isAuth, user, logout} = useContext(AuthContext);
     const [dropdown, toggleDropdown] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
 
     function handleSubmit(e) {
@@ -59,15 +59,20 @@ const Header = ({
                     </button>
                 </form>
                 {/*TODO NAVIGATION component*/}
+
+                {/*    <div className={isOpen ? styles['nav-username-open']: styles['nav-username-closed']}*/}
                 {isAuth && (
-                    <div className={isOpen ? styles['nav-username-open']: styles['nav-username-closed']}
-                    >welcome<br/>{user}
-                    </div>)}
-                <nav className={styles['nav-bar']}>
-                    <Dropdown setSearchField={setSearchField} isOpen={isOpen} setIsOpen={setIsOpen}/>
-                </nav>
+                    <p>welcome<br/>{user.username}
+                    </p>
+                )}
+                <div>
+                    <nav className={styles['nav-bar']}>
+                        <Dropdown setSearchField={setSearchField} isOpen={isOpen} setIsOpen={setIsOpen}/>
+                    </nav>
+                </div>
             </div>
-        </header>)
+        </header>
+    )
 }
 
 export default Header;

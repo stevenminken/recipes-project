@@ -17,7 +17,6 @@ import jwt_decode from 'jwt-decode';
 function App() {
 
     const {isAuth} = useContext(AuthContext);
-    // const token = AAAABBBBBCCCC;
 
     const [recipes, setRecipes] = useState([]);
     const [searchFieldTemp, setSearchFieldTemp] = useState('');
@@ -44,8 +43,7 @@ function App() {
                         toggleInitialRenderHome={toggleInitialRenderHome}
                         setSearchFieldTemp={setSearchFieldTemp}
                         searchFieldTemp={searchFieldTemp}
-                    >
-                    </Header>
+                   />
                     <Routes>
                         <Route path="/" element={
                             <HomePage
@@ -61,7 +59,7 @@ function App() {
                             />}/>
                         <Route path="/recipe/:id" element={<RecipePage/>}/>
                         <Route path="/login" element={<LoginPage/>}/>
-                        <Route path="/profile" element={isAuth === true ? <ProfilePage/> : <Navigate to="/"/>}/>
+                        <Route path="/profile" element={isAuth === true ? <ProfilePage  setSearchField={setSearchField}/> : <Navigate to="/"/>}/>
                         <Route path="/registration" element={<RegistrationPage/>}/>
                         <Route path="/contact" element={<ContactPage/>}/>
                         <Route path="*" element={<NotFoundPage/>}/>

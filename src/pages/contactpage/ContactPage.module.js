@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from "axios";
 import Header from "../../components/header/Header";
 import styles from './ContactPage.module.css'
 // Verzend mail met nodemailer

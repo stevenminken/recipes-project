@@ -11,16 +11,22 @@ const Dropdown = ({setSearchField, isOpen, setIsOpen}) => {
     useEffect(() => {
         document.body.addEventListener('click', handleClick);
 
-        return () => {
-            document.body.removeEventListener('click', handleClick);
-        };
+        // return () => {
+        //     document.body.removeEventListener('click', handleClick);
+        // };
     }, []);
 
     const handleClick = e => {
+
         if (e.target.matches('.person-icon')) {
+            console.log("set target is " + e.target);
+            console.log("is open: " + isOpen);
             setIsOpen(!isOpen);
+
         } else {
+            console.log("else is open: " + isOpen);
             setIsOpen(false);
+            console.log("else is open: " + isOpen);
         }
     };
 
@@ -38,11 +44,11 @@ const Dropdown = ({setSearchField, isOpen, setIsOpen}) => {
                              className={({isActive}) => isActive === true ? styles['active-link'] : styles['default-link']}> Login < /NavLink>
                 )}
                 {isAuth && (
-                    <span className='material-symbols-outlined person-icon' onClick={() => setIsOpen(!isOpen)}>
+                    <span className='material-symbols-outlined person-icon' onClick={handleClick}>
                     person</span>
                 )}
                 {isAuth && isOpen && (
-                    <ul className={styles['dropdown-menu']}>
+                    <ul className={styles['dropdown-menu']} style={{zIndex:1}}>
                         <li className={styles['drop-down-item']}>
                             <NavLink to="/profile"
                                      className={({isActive}) => isActive === true ? styles['active-link'] : styles['default-link']}
