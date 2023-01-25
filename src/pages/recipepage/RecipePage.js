@@ -24,19 +24,42 @@ const RecipePage = () => {
         }
     }, [id]);
     return (
-        <main>
-            {Object.keys(recipe).length > 0 && (
-                <div>
-                    <img src={recipe.image} width="300px"/>
-                    <h3>Title</h3>
-                    <p>{recipe.label}</p>
-                    <h3>meal Type</h3>
-                    <p>{recipe.mealType}</p>
-                    <h3>Time</h3>
-                    <p>{recipe.totalTime}</p>
-                </div>
-            )}
-        </main>
+        <div className="outer-container">
+            <div className="inner-container">
+                <main className={styles["main-div"]}>
+                    {Object.keys(recipe).length > 0 && (
+                        <div className={styles["content-div"]}>
+                            <h2 className={styles["title"]}>{recipe.label}</h2>
+                            <div className={styles["top-div"]}>
+                                <img src={recipe.image} className={styles["image"]}/>
+                                <div className={styles["details-div"]}>
+                                    <h4>Mealtype</h4>
+                                    <p>{recipe.mealType}</p>
+                                    <h4>Cuisinetype</h4>
+                                    <p>{recipe.cuisineType}</p>
+                                    <h4>Ingredients</h4>
+                                    <ul className={styles["ingredient-list"]}>
+                                        {recipe.ingredients.map((ingredient) => {
+                                            return (
+                                                <li>{ingredient.text}</li>
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className={styles["steps-div"]}>
+                            <h3>STEPS</h3>
+                                <ol>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                                    <li>Dicta enim et facilis ipsa officia quisquam reprehenderit sapiente sunt tempore ullam! </li>
+                                    <li>Ab accusantium animi assumenda consequatur deleniti dicta dolorum eius et, exercitationem impedit laboriosam libero.</li><li>Maiores natus nemo non numquam omnis perspiciatis quae quas quasi quibusdam, quidem quod sit sunt tempora vel veniam. </li><li>Ad amet blanditiis commodi consectetur consequuntur culpa cum debitis, doloribus enim error esse expedita fugiat illo in inventore iste iusto laborum mollitia nemo nisi nobis nostrum omnis optio pariatur perspiciatis quidem.</li> <li>Uo quod ratione rerum saepe sequi sit tenetur, voluptas. Ipsa laboriosam necessitatibus nesciunt obcaecati, perferendis quo rem ut vero? Et, magnam minus! Asperiores commodi esse, explicabo in maiores</li> <li>minus obcaecati quidem sunt, temporibus veniam veritatis voluptate. Amet aperiam commodi consectetur consequuntur dignissimos distinctio eaque ipsum, </li><li>mollitia natus numquam obcaecati officia optio pariatur perspiciatis possimus quaerat quam quidem quisquam ratione recusandae repellendus, ullam vero voluptas. </li><li>Fugit iure tempora veniam voluptas voluptatibus? Ab aliquid aspernatur aut commodi consequatur ducimus eaque eos esse eum in inventore ipsum iusto magni minus non odit pariatur placeat quaerat quibusdam quod, </li><li>ratione reprehenderit sapiente sint temporibus unde. Excepturi iusto mollitia non nulla rem similique, voluptate. Eligendi enim, eveniet fugit maxime qui quod sint tenetur.</li>
+                                </ol>
+                                </div>
+                        </div>
+                    )}
+                </main>
+            </div>
+        </div>
     );
 };
 

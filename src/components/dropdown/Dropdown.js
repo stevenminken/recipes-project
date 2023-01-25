@@ -41,7 +41,8 @@ const Dropdown = ({setSearchField, isOpen, setIsOpen}) => {
             <div className={styles['dropdown']}>
                 {!isAuth && (
                     <NavLink to="/login"
-                             className={({isActive}) => isActive === true ? styles['active-link'] : styles['default-link']}> Login < /NavLink>
+                             // className={({isActive}) => isActive === true ? styles['active-link'] : styles['default-link']}> Login < /NavLink>
+                    className={styles["login-text"]}> Login < /NavLink>
                 )}
                 {isAuth && (
                     <span className='material-symbols-outlined person-icon' onClick={handleClick}>

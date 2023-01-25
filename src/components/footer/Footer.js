@@ -4,12 +4,16 @@ import {Link} from "react-router-dom";
 
 const Footer = () => {
     return (
-        <footer className={styles['footer-container']}>
-            <p>&#169;Steven Minken</p>
-            <p>Algemene voorwaarden</p>
-            <p><Link to='/contact' className={styles['footer-contact-link']}>contact</Link></p>
-            <p>Route</p>
-        </footer>
+        <div className={styles["outer-container"]}>
+            <div className={styles["inner-container"]}>
+                <footer className={styles['inner-footer']}>
+                    <p>&#169;2023 Steven Minken</p>
+                    <p><Link to='/privacypolicy' className={styles['footer-contact-link']}>Privacy policy</Link></p>
+                    <p><Link to='/termsofuse' className={styles['footer-contact-link']}>Terms of use</Link></p>
+                    <p><Link to='/contact' className={styles['footer-contact-link']}>Contact</Link></p>
+                </footer>
+            </div>
+        </div>
     );
 };
 

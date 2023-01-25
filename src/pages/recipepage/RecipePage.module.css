@@ -1,3 +1,60 @@
+.main-div {
+    display: flex;
+    flex-basis: var(--height-content);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 1000px;
+    padding: 20px;
+    background-color: var(--white);
+    border:1px solid black;
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    align-self: center;
+}
+.image {
+    width : 400px;
+    margin-right: 20px;
+}
+
+.top-div {
+    display: flex;
+}
+
+.details-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.steps-div {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    line-height:200%
+
+}
+
+.ingredient-list {
+    display: flex;
+    flex-direction: column;
+    list-style: disc;
+}
+
 label {
     width: 200px;
+}
+
+h4 {
+    margin-top: 5px;
 }

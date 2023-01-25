@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import logo from '../../assets/logo.png';
+import delicioso from '../../assets/delicioso.png';
 import styles from './NavBar.module.css';
 import {AuthContext} from "../../context/AuthContext";
 import Dropdown from "../dropdown/Dropdown";
@@ -25,28 +25,33 @@ const NavBar = ({
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav className={styles['navbar']}>
-            <div className={styles['navbar-container']}>
-                <img src={logo} alt="Recipes.com logo" className={styles['logo']} onClick={() => {
-                    // document.getElementById("search-field").value = '';
-                    setSearchFieldTemp('');
-                    void toggleInitialRenderHome(true);
-                    navigate('/')
-                }}/>
-                {/*TODO NAVIGATION component*/}
+        <div className={styles["outer-container"]}>
+            <div className={styles["inner-container"]}>
+                <div className={styles['navbar-container']}>
+                    <img src={delicioso} className={styles['logo']} onClick={() => {
+                        setSearchFieldTemp('');
+                        void toggleInitialRenderHome(true);
+                        navigate('/')
+                    }}/>
+                    <h1 className={styles['title']} onClick={() => {
+                        setSearchFieldTemp('');
+                        void toggleInitialRenderHome(true);
+                        navigate('/')
+                    }}>Delicioso</h1>
 
-                {/*    <div className={isOpen ? styles['nav-username-open']: styles['nav-username-closed']}*/}
-                {isAuth && (
-                    <p>welcome<br/>{user.username}
-                    </p>
-                )}
-                <div>
-                    <nav className={styles['nav-bar']}>
-                        <Dropdown setSearchField={setSearchField} isOpen={isOpen} setIsOpen={setIsOpen}/>
-                    </nav>
+                    {/*    <div className={isOpen ? styles['nav-username-open']: styles['nav-username-closed']}*/}
+                    {isAuth && (
+                        <p className={styles["welcome"]}>welcome {user.username}
+                        </p>
+                    )}
+                    <div>
+                        <nav className={styles['nav-bar']}>
+                            <Dropdown setSearchField={setSearchField} isOpen={isOpen} setIsOpen={setIsOpen}/>
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
     )
 }
 

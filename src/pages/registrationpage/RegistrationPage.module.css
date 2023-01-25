@@ -1,12 +1,14 @@
 .main-element {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    height: var(--height-content);
 }
 .text-div {
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding-bottom: 60px;
 
     /*Development mode*/
     /*border: 1px solid black;*/
@@ -22,6 +24,36 @@
     /*border: 1px solid black;*/
 }
 
+.form input{
+    border: 1px solid #7A7A7A;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: block;
+    font-size: 16px;
+    color: #7A7A7A;
+    width: 450px;
+}
+
+.form input{
+    background-color: #ffffff;
+}
+
+.form label {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+    color: #7A7A7A;
+}
+
 section {
     display: flex;
     justify-content: flex-start;
@@ -33,10 +65,4 @@ section {
     align-self: flex-end;
     margin-top: 20px;
     margin-right: 30px;
-}
-
-.registration-button {
-    display: flex;
-    align-self: center;
-    padding: 5px 10px;
 }

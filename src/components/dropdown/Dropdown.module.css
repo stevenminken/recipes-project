@@ -7,6 +7,11 @@
     border: 1px solid black;
 }
 
+.login-text {
+    color: var(--white);
+    font-size: 20px;
+}
+
 .dropdown-menu {
     display: flex;
     flex-direction: column;
@@ -14,18 +19,19 @@
     width: 85px;
     padding-top: 5px;
     padding-bottom: 5px;
+    background-color: var(--white);
 
-    border: 1px solid grey;
 }
 .drop-down-item {
     padding-top: 5px;
     padding-bottom: 5px;
-}
-
-.drop-down-item {
-    background-color: var(--primary-variant-dark);
+    font-size: 18px;
+    border-top: 1px solid grey;
 }
 
 NavLink {
+    color: var(--white);
+}
+span {
     color: var(--white);
 }

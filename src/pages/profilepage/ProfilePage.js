@@ -2,10 +2,19 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
+import styles from "../profilepage/ProfilePage.module.css";
+import Button from "../../components/button/Button";
 
 const ProfilePage = ({setSearchField}) => {
     const [profileData, setProfileData] = useState({});
+    const [change, toggleChange] = useState({});
     const {user} = useContext(AuthContext);
+    const [error, toggleError] = useState(false);
+    const [loading, toggleLoading] = useState(false);
+
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+
 
     useEffect(() => {
 
@@ -29,27 +38,68 @@ const ProfilePage = ({setSearchField}) => {
         void fetchProfileData();
     }, [])
 
+    async function handleSubmit(e) {
+        e.preventDefault();
+        toggleError(false);
+        toggleLoading(true);
+
+        try {
+            await axios.post(`http://localhost:3000/register`, {
+                email: email,
+                password: user.password,
+                username: username,
+            });
+        } catch (e) {
+            console.error(e);
+            toggleError(true);
+        }
+
+        toggleLoading(false);
+    }
+
     return (
-        <main>
-            <section>
-                <p>test</p>
-                <h2>Persoonlijke gegevens</h2>
-                <p><strong>Gebruikersnaam:</strong> {user.username}</p>
-                <p><strong>Email:</strong> {user.email}</p>
-                {/*<p><strong>Newsletter:</strong>{user.newsletter}</p>*/}
-            </section>
-            {Object.keys(profileData).length > 0 &&
-                <section>
-                    <h2>Strikt geheime profiel-content</h2>
-                    <h3>{profileData.title}</h3>
-                    <p>{profileData.content}</p>
-                </section>
-            }
-            <button type="change">Change</button>
-            {/*    TODO waardes aanpassen*/}
-            <p>Terug naar de <Link to="/" onClick={() => setSearchField('curry')}>Homepagina</Link></p>
-        </main>
-    );
+        <div className="outer-container">
+            <div className="inner-container">
+                <main className={styles['main-element']}>
+                    <div className={styles["content-div"]}>
+                        <div className={styles['title-div']}>
+                            <h2>Profile Page</h2>
+                        </div>
+                        <h3 className={styles["personal-title"]}>Personal data</h3>
+                        <form onSubmit={handleSubmit} className={styles["form"]}>
+                            <section className={styles['input-section']}>
+                                <label for="username">Username:</label><input
+                                type="text"
+                                id="username"
+                                name="username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder={user.username}>
+                            </input>
+                            </section>
+                            <section>
+                                <label for="email">Email:</label><input
+                                type="text"
+                                id="email"
+                                name="email"
+                                placeholder={user.email}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}>
+                            </input>
+                                {/*<p><strong>Newsletter:</strong>{user.newsletter}</p>*/}
+                            </section>
+                            <Button>Change</Button>
+                            {/*    TODO waardes aanpassen*/}
+                        </form>
+                        <p className={styles["back-text"]}>Back to the <Link to="/"
+                                                                             onClick={() => setSearchField('curry')}>homepage</Link>
+                        </p>
+                    </div>
+                </main>
+            </div>
+        </div>
+    )
+        ;
 };
 
 export default ProfilePage;

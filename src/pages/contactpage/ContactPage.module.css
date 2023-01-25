@@ -1,0 +1,73 @@
+.main-element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex-basis: 1400px;
+    flex-shrink: 1;
+    flex-grow: 0;
+    background: var(--light-background);
+    color: black;
+
+    /*Development mode*/
+    border: 3px solid purple;
+}
+.text-div {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+
+    /*Development mode*/
+    border: 1px solid black;
+}
+.input-div {
+    display: flex;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    /*Development mode*/
+    border: 1px solid black;
+}
+
+.form input,
+.form textarea {
+    background-color: #ffffff;
+    border: 1px solid #7A7A7A;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: block;
+    font-size: 16px;
+    color: #7A7A7A;
+    width: 450px;
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+    color: #7A7A7A;
+}
+
+.form label {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.warning {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: red;
+}
+
+.remark-label {
+    align-self: flex-start;
+    padding-top:30px;
+}

@@ -33,24 +33,28 @@ const Header = ({
     }
 
     return (
-        <header className={styles['header-container']}>
-            <form onSubmit={handleSubmit} className={styles['search-bar']}>
-                <input
-                    type="text"
-                    name="search-field"
-                    placeholder="search recipe"
-                    id="search-field"
-                    className={styles['search-field']}
-                    value={searchFieldTemp}
-                    onChange={(e) => setSearchFieldTemp(e.target.value)}
-                    onMouseDown={(e) => toggleSearchInitiated(false)}
-                />
-                <button type="submit" id="search-button" className={styles['search-button']}><span
-                    className={styles['material-symbols-outlined']}>Search</span>
-                </button>
-            </form>
-        </header>
-    )
+        // <header className="outer-container">
+        //     <div className="inner-container">
+                <div className={styles["header-container"]}>
+                <form onSubmit={handleSubmit} className={styles['search-bar']}>
+                    <input
+                        type="text"
+                        name="search-field"
+                        placeholder="search recipe"
+                        id="search-field"
+                        className={styles['search-field']}
+                        value={searchFieldTemp}
+                        onChange={(e) => setSearchFieldTemp(e.target.value)}
+                        onMouseDown={(e) => toggleSearchInitiated(false)}
+                    />
+                    <button type="submit" id="search-button" className={styles['search-button']}><span
+                        className={styles['material-symbols-outlined']}>Search</span>
+                    </button>
+                </form>
+            </div>
+//         </div>
+// </header>
+)
 }
 
 export default Header;
