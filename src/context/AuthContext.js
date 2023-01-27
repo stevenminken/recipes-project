@@ -27,7 +27,7 @@ function AuthContextProvider({children}) {
                 status: 'done',
             });
         }
-    },[]);
+    }, []);
 
     function login(JWT) {
         localStorage.setItem('token', JWT);
@@ -78,11 +78,53 @@ function AuthContextProvider({children}) {
         }
     }
 
+    function update(username, email) {
+        if (username === '') {
+            username = authentication.user.username;
+        }
+        if (email === '') {
+            email = authentication.user.email;
+        }
+
+        async function updateUserData(username, email) {
+            const token = localStorage.getItem('token');
+            const id = authentication.user.id;
+
+            try {
+                await axios.patch(`http://localhost:3000/600/users/${id}`, {
+                    email: email,
+                    username: username,
+                }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                toggleAuthentication({
+                    ...authentication,
+                    user: {
+                        username: username,
+                        email: email,
+                    },
+                    status: 'done',
+                });
+            } catch
+                (e) {
+                console.error(e);
+            }
+        }
+
+        updateUserData(username, email);
+        console.log("update aangeroepen");
+    }
+
     const contextData = {
         isAuth: authentication.isAuth,
         user: authentication.user,
         login: login,
         logout: logout,
+        update: update,
     };
 
     return (

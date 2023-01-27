@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
 import styles from "../profilepage/ProfilePage.module.css";
@@ -8,13 +8,12 @@ import Button from "../../components/button/Button";
 const ProfilePage = ({setSearchField}) => {
     const [profileData, setProfileData] = useState({});
     const [change, toggleChange] = useState({});
-    const {user} = useContext(AuthContext);
+    const {user, update} = useContext(AuthContext);
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-
 
     useEffect(() => {
 
@@ -40,21 +39,7 @@ const ProfilePage = ({setSearchField}) => {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        toggleError(false);
-        toggleLoading(true);
-
-        try {
-            await axios.post(`http://localhost:3000/register`, {
-                email: email,
-                password: user.password,
-                username: username,
-            });
-        } catch (e) {
-            console.error(e);
-            toggleError(true);
-        }
-
-        toggleLoading(false);
+        update(username, email);
     }
 
     return (
