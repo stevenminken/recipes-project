@@ -1,18 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import Header from "../../components/header/Header";
 import {useParams} from "react-router-dom";
 import axios from "axios";
 import styles from './RecipePage.module.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const RecipePage = () => {
     const [recipe, setRecipe] = useState({});
     const {id} = useParams();
-    console.log("from recipe page: " + id);
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await axios.get(`https://api.edamam.com/api/recipes/v2/${id}?type=public&app_id=973f4fa3&app_key=d99e219fc4b58e878b793779677dd4ee`);
-                console.log(response.data.recipe);
                 setRecipe(response.data.recipe);
             } catch (err) {
                 console.error(err);
@@ -39,9 +37,9 @@ const RecipePage = () => {
                                     <p>{recipe.cuisineType}</p>
                                     <h4>Ingredients</h4>
                                     <ul className={styles["ingredient-list"]}>
-                                        {recipe.ingredients.map((ingredient) => {
+                                        {recipe.ingredients.map((ingredient ) => {
                                             return (
-                                                <li>{ingredient.text}</li>
+                                                <li className={styles["ingredient-text"]} key={uuidv4()}>{ingredient.text}</li>
                                             )
                                         })}
                                     </ul>

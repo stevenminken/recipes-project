@@ -1,76 +1,80 @@
 import {createContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import jwt_decode from 'jwt-decode';
 import axios from 'axios';
+import jwtDecode from "jwt-decode";
+import {getCurrentTime} from "../helpers/functions";
 
 export const AuthContext = createContext({});
 
 function AuthContextProvider({children}) {
 
-    const [authentication, toggleAuthentication] = useState({
+    const API_ID = process.env.REACT_APP_API_ID;
+    const API_KEY = process.env.REACT_APP_API_KEY;
+
+    const navigate = useNavigate();
+
+    const [authentication, setAuthentication] = useState({
         isAuth: false,
         user: null,
         status: 'pending',
+        roles: null,
     });
-    const navigate = useNavigate();
+
+    const [loadingError, toggleLoadingError] = useState(false);
+    const [loadingErrorMessage, setLoadingErrorMessage] = useState('');
+    const [responseError, toggleResponseError] = useState({
+            error: false,
+            errorMessage: '',
+        }
+    );
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = getToken();
 
+        let tokenNotExpired = false;
         if (token) {
-            const decoded = jwt_decode(token);
-            void fetchUserData(decoded.sub, token);
+            const decodedToken = jwtDecode(token);
+            tokenNotExpired = getCurrentTime() < decodedToken.exp;
+        }
+        if (token && tokenNotExpired) {
+            void fetchUserData();
         } else {
-            toggleAuthentication({
+            setAuthentication({
                 isAuth: false,
                 user: null,
                 status: 'done',
             });
+            // navigate('/');
         }
     }, []);
 
-    function login(JWT) {
-        localStorage.setItem('token', JWT);
-        const decoded = jwt_decode(JWT);
-
-        void fetchUserData(decoded.sub, JWT);
-
+    function getToken() {
+        return localStorage.getItem('token');
     }
 
-    function logout() {
-        localStorage.clear();
-
-        toggleAuthentication({
-            isAuth: false,
-            user: null,
-            status: 'done',
-        });
-        navigate('/');
-    }
-
-    async function fetchUserData(id, token) {
+    async function fetchUserData() {
         try {
-            const result = await axios.get(`http://localhost:3000/600/users/${id}`, {
+            const response = await axios.get(`https://frontend-educational-backend.herokuapp.com/api/user`, {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${getToken()}`,
                 },
             });
-
-            toggleAuthentication({
+            setAuthentication({
                 ...authentication,
                 isAuth: true,
                 user: {
-                    username: result.data.username,
-                    email: result.data.email,
-                    id: result.data.id,
+                    username: response.data.username,
+                    email: response.data.email,
+                    roles: response.data.roles,
+                    id: response.data.id,
                 },
                 status: 'done',
             });
-            navigate('/profile');
+
         } catch (e) {
-            console.error(e);
-            toggleAuthentication({
+            console.error("fetch fout" + e.response);
+            setAuthentication({
                 isAuth: false,
                 user: null,
                 status: 'done',
@@ -78,61 +82,218 @@ function AuthContextProvider({children}) {
         }
     }
 
-    function update(username, email) {
-        if (username === '') {
-            username = authentication.user.username;
-        }
-        if (email === '') {
-            email = authentication.user.email;
+    async function register(username, email, password, role) {
+        toggleResponseError(false);
+        let roles;
+        if (role === "admin") {
+            roles = ["user", "admin"];
+        } else {
+            roles = ["user"];
         }
 
-        async function updateUserData(username, email) {
-            const token = localStorage.getItem('token');
-            const id = authentication.user.id;
+        try {
+            const response = await axios.post(`https://frontend-educational-backend.herokuapp.com/api/auth/signup`, {
+                "username": username,
+                "email": email,
+                "password": password,
+                "roles": roles,
+            });
+            navigate('/login');
+            toggleResponseError(() => {
+                return {
+                    error: false,
+                    errorMessage: '',
+                }
+            })
+        } catch (e) {
+            console.error(e.response);
+            toggleResponseError(() => {
+                return {
+                    error: true,
+                    errorMessage: e.response,
+                }
+            })
+        }
+    }
 
-            try {
-                await axios.patch(`http://localhost:3000/600/users/${id}`, {
+    async function login(username, password) {
+        toggleResponseError(false);
+
+        try {
+            const response = await axios.post(`https://frontend-educational-backend.herokuapp.com/api/auth/signin`, {
+                username: username,
+                password: password,
+            });
+            localStorage.setItem('token', response.data.accessToken);
+            await fetchUserData();
+            navigate('/profile');
+            toggleResponseError(() => {
+                return {
+                    error: false,
+                    errorMessage: '',
+                }
+            })
+        } catch (e) {
+            console.error(e);
+            toggleResponseError(() => {
+                return {
+                    error: true,
+                    errorMessage: e.response,
+                }
+            })
+        }
+    }
+
+    function logout() {
+        setAuthentication({
+            isAuth: false,
+            user: null,
+            status: 'done'
+        });
+        navigate('/');
+        localStorage.removeItem('token');
+    }
+
+    async function updateUserEmail(email) {
+        try {
+            const response = await axios.put(`https://frontend-educational-backend.herokuapp.com/api/user`, {
+                    name: "steven",
                     email: email,
-                    username: username,
-                }, {
+                },
+                {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${getToken()}`,
                     },
                 });
-
-                toggleAuthentication({
-                    ...authentication,
-                    user: {
-                        username: username,
-                        email: email,
-                    },
-                    status: 'done',
-                });
-            } catch
-                (e) {
-                console.error(e);
-            }
+            setAuthentication({
+                ...authentication,
+                user: {
+                    username: response.data.username,
+                    email: response.data.email,
+                    roles: response.data.roles,
+                },
+                status: 'done',
+            });
+            fetchUserData();
+            toggleResponseError(() => {
+                return {
+                    error: false,
+                    errorMessage: '',
+                }
+            })
+        } catch
+            (e) {
+            console.error(e.response);
+            setAuthentication({
+                ...authentication,
+                status: 'done',
+            })
+            toggleResponseError(() => {
+                return {
+                    error: true,
+                    errorMessage: e.response,
+                }
+            })
         }
-
-        updateUserData(username, email);
-        console.log("update aangeroepen");
     }
+
+    async function updateUserPassword(password) {
+        try {
+            await axios.put(`https://frontend-educational-backend.herokuapp.com/api/user`, {
+                    password: password,
+                    repeatedPassword: password,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${getToken()}`,
+                    },
+                });
+            toggleResponseError(() => {
+                return {
+                    error: false,
+                    errorMessage: '',
+                }
+            })
+        } catch
+            (e) {
+            console.error(e.response);
+            toggleResponseError(() => {
+                return {
+                    error: true,
+                    errorMessage: e.response,
+                }
+            })
+        }
+    }
+
+    async function requestAllUserData() {
+        try {
+            const response = await axios.get(`https://frontend-educational-backend.herokuapp.com/api/admin/all`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${getToken()}`,
+                    },
+                });
+            toggleResponseError(() => {
+                return {
+                    error: false,
+                    errorMessage: '',
+                }
+            })
+            return response.data;
+        } catch
+            (e) {
+            console.error(e.response);
+            toggleResponseError(() => {
+                return {
+                    error: true,
+                    errorMessage: e.response,
+                }
+            })
+        }
+    }
+
+    async function fetchRecipesData(searchterm) {
+
+        try {
+            const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchterm}&app_id=${API_ID}&app_key=${API_KEY}`;
+            const response = await axios.get(uri);
+            toggleLoadingError(false);
+            setLoadingErrorMessage('');
+            return response;
+        } catch (err) {
+            console.error(err);
+            toggleLoadingError(true);
+            setLoadingErrorMessage("To many fetch requests. Blocked by CORS policy. Please try again later");
+        }
+    }
+
 
     const contextData = {
         isAuth: authentication.isAuth,
         user: authentication.user,
+        status: authentication.status,
+        register: register,
         login: login,
         logout: logout,
-        update: update,
+        updateUserEmail: updateUserEmail,
+        updateUserPassword: updateUserPassword,
+        requestAllUserData: requestAllUserData,
+        fetchRecipesData: fetchRecipesData,
+        responseError: responseError,
+        loadingError: loadingError,
+        loadingErrorMessage: loadingErrorMessage,
     };
+
 
     return (
         <AuthContext.Provider value={contextData}>
-            {children}
-            {/*{isAuth.status === 'done' ? children : <p>Loading...</p>}*/}
+            {authentication.status === 'done' ? children : <p>Loading...</p>}
         </AuthContext.Provider>
-    );
+    )
 }
 
 export default AuthContextProvider;

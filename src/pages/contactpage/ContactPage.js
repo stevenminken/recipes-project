@@ -4,9 +4,7 @@ import Header from "../../components/header/Header";
 import styles from './ContactPage.module.css'
 import {Link} from "react-router-dom";
 import Button from "../../components/button/Button";
-// Verzend mail met nodemailer
-// https://www.npmjs.com/package/nodemailer-react
-// https://developers.google.com/recaptcha/docs/display
+
 const ContactPage = () => {
 
     const [firstname, setFirstname] = useState('');
@@ -24,7 +22,6 @@ const ContactPage = () => {
     Email: ${email}, 
     Remark: ${remark}, 
     `);
-        console.log(`Firstname: ${firstname}, Lastname: ${lastname}, Email: ${email}, Remark: ${remark}`);
     }
 
     function handleToggle() {

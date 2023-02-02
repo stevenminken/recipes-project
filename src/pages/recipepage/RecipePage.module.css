@@ -1,9 +1,8 @@
 .main-div {
     display: flex;
-    flex-basis: var(--height-content);
-    display: flex;
     justify-content: center;
     align-items: center;
+    min-height: var(--height-content);
 }
 
 .content-div {
@@ -14,7 +13,6 @@
     width: 1000px;
     padding: 20px;
     background-color: var(--white);
-    border:1px solid black;
 }
 
 .title {
@@ -48,7 +46,7 @@
 .ingredient-list {
     display: flex;
     flex-direction: column;
-    list-style: disc;
+    list-style: none;
 }
 
 label {

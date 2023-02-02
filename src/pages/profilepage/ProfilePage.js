@@ -1,46 +1,82 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {AuthContext} from "../../context/AuthContext";
-import axios from "axios";
 import styles from "../profilepage/ProfilePage.module.css";
 import Button from "../../components/button/Button";
+import {returnRandomSearchQuery} from "../../helpers/functions";
 
 const ProfilePage = ({setSearchField}) => {
-    const [profileData, setProfileData] = useState({});
-    const [change, toggleChange] = useState({});
-    const {user, update} = useContext(AuthContext);
-    const [error, toggleError] = useState(false);
-    const [loading, toggleLoading] = useState(false);
+    const {user, updateUserEmail, updateUserPassword, responseError} = useContext(AuthContext);
 
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
+    const [role, setRole] = useState('User');
+    const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
+
+    const [emailError, toggleEmailError] = useState(false);
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
+    const [passwordError, togglePasswordError] = useState(false);
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+    const [repeatPasswordError, toggleRepeatPasswordError] = useState(false);
+    const [repeatPasswordErrorMessage, setRepeatPasswordErrorMessage] = useState('');
 
     useEffect(() => {
-
-        async function fetchProfileData() {
-            const token = localStorage.getItem('token');
-
-            try {
-                const result = await axios.get(`http://localhost:3000/660/private-content`, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
-                setProfileData(result.data);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-
-        void fetchProfileData();
+        setRole(getUserRole);
     }, [])
+
+    function getUserRole() {
+        let userRole = 'user';
+        user.roles.map((role) => {
+            if (role.name.includes('ADMIN')) {
+                userRole = "admin"
+            }
+        });
+        return userRole;
+    }
+
+
+    const handleUpdate = (value, currentValue, updateFunction) => {
+        if (value !== '' && value !== currentValue) {
+            updateFunction(value);
+        }
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
-        update(username, email);
+        if (email.length > 0 && email.length < 6) {
+            toggleEmailError(true);
+            setEmailErrorMessage('email should be at least 6 characters');
+        } else if (!email.includes('@')) {
+            toggleEmailError(true);
+            setEmailErrorMessage('email address should contain @');
+        } else {
+            toggleEmailError(false)
+            setEmailErrorMessage('');
+        }
+        if (password.length > 0 && password.length < 6) {
+            togglePasswordError(true);
+            setPasswordErrorMessage('password should be at least 6 characters');
+        } else {
+            togglePasswordError(false)
+            setPasswordErrorMessage('');
+        }
+        if (password !== repeatPassword) {
+            toggleRepeatPasswordError(true);
+            setRepeatPasswordErrorMessage('passwords don\'t match');
+        } else {
+            toggleRepeatPasswordError(false)
+            setRepeatPasswordErrorMessage('');
+        }
+        if (!emailError && !passwordError && !repeatPasswordError) {
+            if (email.length > 0) {
+                handleUpdate(email, user.email, updateUserEmail);
+            }
+            if (password.length > 0) {
+                handleUpdate(password, '', updateUserPassword);
+            }
+        }
     }
+
 
     return (
         <div className="outer-container">
@@ -49,42 +85,78 @@ const ProfilePage = ({setSearchField}) => {
                     <div className={styles["content-div"]}>
                         <div className={styles['title-div']}>
                             <h2>Profile Page</h2>
+                            <h3 className={styles["personal-title"]}>Personal data</h3>
                         </div>
-                        <h3 className={styles["personal-title"]}>Personal data</h3>
                         <form onSubmit={handleSubmit} className={styles["form"]}>
                             <section className={styles['input-section']}>
-                                <label for="username">Username:</label><input
-                                type="text"
-                                id="username"
-                                name="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                placeholder={user.username}>
-                            </input>
+                                <label htmlFor="username">Username:</label>
+                                <p className={styles['profile-text']}>{user.username}</p>
+                            </section>
+                            <section className={styles['input-section']}>
+                                <label htmlFor="role">Role:</label>
+                                <p className={styles['profile-text']}>{role}</p>
                             </section>
                             <section>
-                                <label for="email">Email:</label><input
+                                <label htmlFor="email">Email:</label><input
                                 type="text"
                                 id="email"
-                                name="email"
                                 placeholder={user.email}
+                                name="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}>
                             </input>
-                                {/*<p><strong>Newsletter:</strong>{user.newsletter}</p>*/}
+                                {emailError && (
+                                    <p className={styles['error-message']}>{emailErrorMessage}</p>)
+                                }
                             </section>
-                            <Button>Change</Button>
-                            {/*    TODO waardes aanpassen*/}
+                            <section>
+                                <label htmlFor="password">New Password:</label><input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="type your new password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}>
+                            </input>
+                                {passwordError && (
+                                    <p className={styles['error-message']}>{passwordErrorMessage}</p>)
+                                }
+                            </section>
+                            <section>
+                                <label htmlFor="repeatPassword">Repeat Password:</label><input
+                                type="password"
+                                id="repeatPassword"
+                                name="repeatPassword"
+                                placeholder="repeat your new password"
+                                value={repeatPassword}
+                                onChange={(e) => setRepeatPassword(e.target.value)}>
+                            </input>
+                                {repeatPasswordError && (
+                                    <p className={styles['error-message']}>{repeatPasswordErrorMessage}</p>)
+                                }
+                            </section>
+                            <section className={styles['button-section']}>
+                                <Button>Save Changes</Button>
+                                {responseError.error &&
+                                    <section><p className={styles['error-message']}>{responseError.errorMessage}</p>
+                                    </section>}
+                            </section>
                         </form>
-                        <p className={styles["back-text"]}>Back to the <Link to="/"
-                                                                             onClick={() => setSearchField('curry')}>homepage</Link>
-                        </p>
+                        <section className={styles['link-text-near-footer']}>
+                            <p><Link to="/" onClick={() => setSearchField(returnRandomSearchQuery())}
+                                     className={styles['link-style']}>back to the homepage</Link>
+                            </p>
+                            {(role === 'admin') && (
+                                <>
+                                    <p><Link to='/admin' className={styles['link-style']}>adminpage</Link></p>
+                                </>
+                            )}
+                        </section>
                     </div>
                 </main>
             </div>
         </div>
-    )
-        ;
+    );
 };
 
 export default ProfilePage;

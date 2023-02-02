@@ -1,13 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400;700&family=Heebo:wght@300;400;600&display=swap');
-/*font-family: 'Domine', serif;*/
-/*font-family: 'Heebo', sans-serif;*/
-/*A color scheme that includes a neutral color like white or gray for the background can make the website feel clean and easy to read. A pop of color, such as red or orange, can be used to draw attention to important elements like the recipe titles. This can make the website visually appealing and easy to navigate. Additionally, incorporating colors commonly associated with food, such as green for vegetables and brown for meats, can also be an effective way to tie the website's theme together. Overall, you should aim to create a color scheme that is simple, easy on the eyes, and that complements the content of the website.*/
-/*White: #FFFFFF*/
-/*Gray: #F5F5F5*/
-/*Red: #FF0000*/
-/*Orange: #FFA500*/
-/*Green: #008000*/
-/*Brown: #A52A2A*/
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;600&family=Roboto&display=swap');
 
 /*////////////////////////
     Table of Contents
@@ -25,49 +16,47 @@
         4.6 Footer
     5. Media Queries
 ////////////////////////*/
-
+/*CSS reset*/
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/*Globale classen*/
+/*Global classes*/
 .outer-container {
     width: 100%;
     height: 100%;
     background-color: var(--light-background);
-    border: solid black 2px;
 }
 
 .inner-container {
+    display: flex;
     flex-basis: 1440px;
     flex-shrink: 1;
     flex-grow: 0;
-    /*We voegen margin toe aan de linker- en rechterkant, zodat de content nooit helemaal tegen de rand gedrukt kan worden*/
     margin-left: 80px;
     margin-right: 80px;
-    /*We zorgen er ook voor dat deze flex-item op haar beurt ook weer een flexbox container is, waarin alle children onder elkaar komen te staan*/
     height: 100%;
-
-    border: solid yellow 3px;
+    justify-content: center;
 }
 
 body {
-    font-family: 'Domine', serif;
-    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
     background-color: var(--white);
     color: var(--black);
 }
 
 :root {
-    /*--primary: #1AD6BD;*/
-    --primary: #AAE6DE;
+    --primary: #79C084;
+    /*--primary: #AAE6DE;*/
     --primary-variant-dark: #2f9c95;
     --primary-variant-light: #1AD6BD;
     --light-background: #F7F7F7;
-    --red: #960200;
-    --secondary: #664147;
+    --button-yellow: #FCA311;
+    --button-brown: #960200;
     --black: #000000;
     --white: #FFFFFF;
 
@@ -75,11 +64,11 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Heebo', sans-serif;
+    font-family: 'Frank Ruhl Libre', serif;
 }
 
 h1 {
-    font-size: 80px;
+    font-size: 100px;
 }
 
 h2 {
@@ -90,32 +79,10 @@ h3 {
     font-size: 24px;
 }
 
-.app-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    justify-content: space-between;
-    border: 2px solid pink;
+p {
+    font-size: 18px;
 }
 
-/*:global(.inner-container) {*/
-/*  flex-basis: 1440px;*/
-/*  flex-shrink: 1;*/
-/*  flex-grow: 0;*/
-/*  !*We voegen margin toe aan de linker- en rechterkant, zodat de content nooit helemaal tegen de rand gedrukt kan worden*!*/
-/*  margin-left: 80px;*/
-/*  margin-right: 80px;*/
-/*  !*We zorgen er ook voor dat deze flex-item op haar beurt ook weer een flexbox container is, waarin alle children onder elkaar komen te staan*!*/
-/*  height: 100%;*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  justify-content: space-between;*/
-/*  border: solid blue 2px;*/
-/*}*/
-
-/*:global(.outer-container) {*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  background-color: var(--light-background);*/
-/*  border: solid black 2px;*/
-/*}*/
+.person-icon {
+    color: var(--white);
+}

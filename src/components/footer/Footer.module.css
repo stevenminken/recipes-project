@@ -1,22 +1,7 @@
-/*Globale classen*/
-.inner-container {
-    flex-basis: 1440px;
-    flex-shrink: 1;
-    flex-grow: 0;
-    /*We voegen margin toe aan de linker- en rechterkant, zodat de content nooit helemaal tegen de rand gedrukt kan worden*/
-    margin-left: 80px;
-    margin-right: 80px;
-    /*We zorgen er ook voor dat deze flex-item op haar beurt ook weer een flexbox container is, waarin alle children onder elkaar komen te staan*/
-    height: 100%;
-
-    border: solid blue 2px;
-}
-
 .outer-container {
     width: 100%;
     height: 100%;
     background-color: var(--primary);;
-    border: solid black 2px;
 }
 /**/
 

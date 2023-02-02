@@ -1,32 +1,38 @@
 import React, {useContext, useState} from 'react';
 import {Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
-import axios from "axios";
 import styles from './LoginPage.module.css';
 import Button from "../../components/button/Button";
 
 const LoginPage = () => {
 
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, toggleError] = useState(false);
-    const {login, user} = useContext(AuthContext);
+    const {login, responseError} = useContext(AuthContext);
+
+    const [usernameError, toggleUsernameError] = useState(false);
+    const [usernameErrorMessage, setUsernameErrorMessage] = useState('');
+    const [passwordError, togglePasswordError] = useState(false);
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
     async function handleSubmit(e) {
         e.preventDefault();
-        toggleError(false);
-
-        try {
-            const result = await axios.post(`http://localhost:3000/login`, {
-                email: email,
-                password: password,
-            });
-
-            login(result.data.accessToken);
-
-        } catch (e) {
-            console.error(e);
-            toggleError(true);
+        if (username.length < 6) {
+            toggleUsernameError(true);
+            setUsernameErrorMessage('username should be at least 6 characters');
+        } else {
+            toggleUsernameError(false)
+            setUsernameErrorMessage('');
+        }
+        if (password.length < 6) {
+            togglePasswordError(true);
+            setPasswordErrorMessage('password should be at least 6 characters');
+        } else {
+            togglePasswordError(false)
+            setPasswordErrorMessage('');
+        }
+        if (!usernameError && !passwordError) {
+            login(username, password);
         }
     }
 
@@ -39,14 +45,18 @@ const LoginPage = () => {
                     </div>
                     <form onSubmit={handleSubmit} className={styles['form']}>
                         <section>
-                            <label htmlFor="email-field">Email:</label>
+                            <label htmlFor="username-field">Username:</label>
                             <input
-                                name="email"
-                                id="email-field"
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                name="username"
+                                id="username-field"
+                                type="username"
+                                placeholder="username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                             />
+                            {usernameError && (
+                                <p className={styles['error-message']}>{usernameErrorMessage}</p>)
+                            }
                         </section>
                         <section>
                             <label htmlFor="password-field">Password:</label>
@@ -54,15 +64,19 @@ const LoginPage = () => {
                                 name="password"
                                 id="password-field"
                                 type="password"
+                                placeholder="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                            {passwordError && (
+                                <p className={styles['error-message']}>{passwordErrorMessage}</p>)
+                            }
                         </section>
-                        {error &&
-                            <section><p className="error">Combination of email and password is not correct</p>
-                            </section>}
                         <section className={styles['button-section']}>
                             <Button>Submit</Button>
+                            {responseError.error &&
+                                <section><p className={styles['error-message']}>Verify your login credentials and try again</p>
+                                </section>}
                         </section>
                         {/*    TODO password vergeten*/}
                     </form>

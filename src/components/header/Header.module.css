@@ -1,4 +1,5 @@
 .header-container {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,9 +9,6 @@
     background-image: url('../../assets/header-image.jpg');
     background-size: 100%;
     margin-bottom: 30px;
-
-    /*development mode*/
-    /*border: solid black 2px;*/
 }
 
 .search-bar {
@@ -20,13 +18,4 @@
 
 .search-field {
     width: 600px;
-}
-
-.search-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: cornflowerblue;
-    color: var(--white);
-    width: 80px;
 }

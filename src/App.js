@@ -8,11 +8,13 @@ import ProfilePage from "./pages/profilepage/ProfilePage";
 import NotFoundPage from "./pages/notfoundpage/NotFoundPage";
 import ContactPage from "./pages/contactpage/ContactPage";
 import Footer from "./components/footer/Footer";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {AuthContext} from "./context/AuthContext";
 import NavBar from "./components/navbar/NavBar";
 import PrivacyPolicyPage from "./pages/privacypolicy/PrivacyPolicyPage";
 import TermsOfUsePage from "./pages/termsofuse/TermsOfUsePage";
+import AdminPage from "./pages/adminpage/AdminPage";
+import Filler from "./components/filler/Filler";
 
 function App() {
 
@@ -24,22 +26,13 @@ function App() {
     const [searchInitiated, toggleSearchInitiated] = useState(false);
     const [initialRenderHome, toggleInitialRenderHome] = useState(true);
 
-    //https://github.com/hogeschoolnovi/novi-educational-backend-documentation
-    //mailer captcha
-
     return (
-        <div className="app-container">
+        <div>
+            <Filler/>
             <NavBar
-                recipes={recipes}
-                setRecipes={setRecipes}
-                searchInitiated={searchInitiated}
-                toggleSearchInitiated={toggleSearchInitiated}
-                searchField={searchField}
                 setSearchField={setSearchField}
-                initialRenderHome={initialRenderHome}
                 toggleInitialRenderHome={toggleInitialRenderHome}
                 setSearchFieldTemp={setSearchFieldTemp}
-                searchFieldTemp={searchFieldTemp}
             />
 
             <Routes>
@@ -55,12 +48,15 @@ function App() {
                         toggleInitialRenderHome={toggleInitialRenderHome}
                         setSearchFieldTemp={setSearchFieldTemp}
                         searchFieldTemp={searchFieldTemp}
-
                     />}/>
                 <Route path="/recipe/:id" element={<RecipePage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/profile"
-                       element={isAuth === true ? <ProfilePage setSearchField={setSearchField}/> :
+                       element={isAuth === true ? <ProfilePage
+                               setSearchField={setSearchField}/> :
+                           <Navigate to="/"/>}/>
+                <Route path="/admin"
+                       element={isAuth === true ? <AdminPage/> :
                            <Navigate to="/"/>}/>
                 <Route path="/registration" element={<RegistrationPage/>}/>
                 <Route path="/privacypolicy" element={<PrivacyPolicyPage/>}/>

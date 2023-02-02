@@ -6,21 +6,12 @@ import Dropdown from "../dropdown/Dropdown";
 import {useNavigate} from "react-router-dom";
 
 const NavBar = ({
-                    recipes,
-                    setRecipes,
-                    searchInitiated,
-                    toggleSearchInitiated,
-                    searchField,
                     setSearchField,
-                    fetchSearchData,
-                    initialRenderHome,
                     toggleInitialRenderHome,
-                    searchFieldTemp,
                     setSearchFieldTemp
                 }) => {
 
-    const {isAuth, user, logout} = useContext(AuthContext);
-    const [dropdown, toggleDropdown] = useState(false);
+    const {isAuth, user} = useContext(AuthContext);
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -38,14 +29,12 @@ const NavBar = ({
                         void toggleInitialRenderHome(true);
                         navigate('/')
                     }}>Delicioso</h1>
-
-                    {/*    <div className={isOpen ? styles['nav-username-open']: styles['nav-username-closed']}*/}
                     {isAuth && (
                         <p className={styles["welcome"]}>welcome {user.username}
                         </p>
                     )}
                     <div>
-                        <nav className={styles['nav-bar']}>
+                        <nav className={styles['nav-bar-dropdown']}>
                             <Dropdown setSearchField={setSearchField} isOpen={isOpen} setIsOpen={setIsOpen}/>
                         </nav>
                     </div>
