@@ -1,0 +1,9 @@
+.content-div {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    margin-top:30px;
+    margin-bottom: 30px;
+    margin-left: 50px;
+    min-height: var(--height-content);
+}

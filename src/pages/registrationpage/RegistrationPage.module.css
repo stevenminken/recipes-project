@@ -1,0 +1,99 @@
+.main-element {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: var(--height-content);
+}
+.text-div {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    padding-bottom: 40px;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 700px;
+}
+
+.form input{
+    border: 1px solid #7A7A7A;
+    border-radius: 3px;
+    font-family: 'Roboto', sans-serif;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: block;
+    font-size: 16px;
+    color: #7A7A7A;
+    width: 450px;
+}
+
+.form input{
+    background-color: #ffffff;
+}
+
+.form label {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+    color: #7A7A7A;
+}
+
+section {
+    display: flex;
+    justify-content: flex-start;
+    margin: 5px;
+}
+
+.radio-label {
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.button-section {
+    display: flex;
+    align-self: flex-end;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    width: 100%;
+    justify-content: center;
+}
+
+.succes-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 16px;
+    color: green;
+    margin-left: 5px;
+}
+
+.error-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 16px;
+    color: red;
+    margin-left: 5px;
+}
+.error-message-input {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 5px;
+    width: 300px;
+    font-size: 16px;
+    color: red;
+    margin-left: 5px;
+}

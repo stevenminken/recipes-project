@@ -1,38 +1,87 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;600&family=Roboto&display=swap');
+
+/*////////////////////////
+    Table of Contents
+    1. Global Styles
+    2. Typography
+    3. Layout
+        3.1 Reusables
+        3.2 Other
+    4. Areas
+        4.1 Header
+        4.2 Introduction
+        4.3 Work
+        4.4 Services
+        4.5 Contact
+        4.6 Footer
+    5. Media Queries
+////////////////////////*/
+/*CSS reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    background-color: var(--white);
+    color: var(--black);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Frank Ruhl Libre', serif;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h1 {
+    font-size: 100px;
 }
 
-.App-link {
-  color: #61dafb;
+h2 {
+    font-size: 42px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h3 {
+    font-size: 24px;
+}
+
+p {
+    font-size: 18px;
+}
+
+:root {
+    --primary: #79C084;
+    --primary-variant-dark: #2f9c95;
+    --primary-variant-light: #1AD6BD;
+    --light-background: #F7F7F7;
+    --button-yellow: #FCA311;
+    --button-brown: #960200;
+    --black: #000000;
+    --white: #FFFFFF;
+
+    --height-content: calc(100vh - 270px);
+}
+
+/*Global Styles*/
+.outer-container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-background);
+}
+
+.inner-container {
+    display: flex;
+    flex-basis: 1440px;
+    flex-shrink: 1;
+    flex-grow: 0;
+    margin-left: 80px;
+    margin-right: 80px;
+    height: 100%;
+    justify-content: center;
+}
+
+.person-icon {
+    color: var(--white);
 }

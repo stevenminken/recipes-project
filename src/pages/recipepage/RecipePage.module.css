@@ -1,0 +1,65 @@
+.main-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: var(--height-content);
+}
+
+.content-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 1000px;
+    padding: 20px;
+    background-color: var(--white);
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    align-self: center;
+}
+.image {
+    width : 400px;
+    margin-right: 20px;
+}
+
+.top-div {
+    display: flex;
+}
+
+.details-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.steps-div {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    line-height:200%
+
+}
+
+.ingredient-list {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    list-style: disc outside;
+    margin-left: 20px;
+}
+
+.recipe-step-list {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+label {
+    width: 200px;
+}
+
+.recipe-h4-title {
+    margin-top: 12px;
+}

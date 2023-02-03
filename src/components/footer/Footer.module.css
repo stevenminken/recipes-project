@@ -1,0 +1,25 @@
+.outer-container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary);;
+}
+
+.footer-contact-link {
+    text-decoration: none;
+    color: var(--white);
+}
+
+footer > p {
+    padding-top: 0px;
+    padding-bottom: 30px;
+}
+
+.inner-footer {
+    color: var(--white);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+}
