@@ -20,22 +20,18 @@ function App() {
 
     const {isAuth} = useContext(AuthContext);
     const [searchField, setSearchField] = useState('');
-    const [searchFieldTemp, setSearchFieldTemp] = useState('');
 
     return (
         <div>
             <Filler/>
             <NavBar
                 setSearchField={setSearchField}
-                setSearchFieldTemp={setSearchFieldTemp}
             />
             <Routes>
                 <Route path="/" element={
                     <HomePage
                         searchField={searchField}
                         setSearchField={setSearchField}
-                        searchFieldTemp={searchFieldTemp}
-                        setSearchFieldTemp={setSearchFieldTemp}
                     />}/>
                 <Route path="/recipe/:id" element={<RecipePage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>

@@ -21,15 +21,14 @@ const AdminPage = ({setSearchField}) => {
     }, [])
 
     function getUserRole(user) {
-        let extractedRole = '';
+        let userRole = 'user';
         user.roles.map((role) => {
             if (role.name.includes('ADMIN')) {
-                extractedRole = "Admin";
-            } else {
-                extractedRole = "User";
+                userRole = "admin"
             }
+            return null;
         });
-        return extractedRole;
+        return userRole;
     }
 
     return (

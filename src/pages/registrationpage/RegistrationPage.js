@@ -60,8 +60,7 @@ const RegistrationPage = () => {
         if (password.length < 6) {
             togglePasswordError(true);
             setPasswordErrorMessage('password should be at least 6 characters');
-        }
-        if (password !== repeatPassword) {
+        } else if (password !== repeatPassword) {
             toggleRepeatPasswordError(true);
             setRepeatPasswordErrorMessage('passwords don\'t match');
         } else {

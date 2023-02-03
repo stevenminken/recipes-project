@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
-import axios from "axios";
-import Header from "../../components/header/Header";
 import styles from './ContactPage.module.css'
-import {Link} from "react-router-dom";
 import Button from "../../components/button/Button";
 
 const ContactPage = () => {

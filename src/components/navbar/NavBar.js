@@ -18,7 +18,7 @@ const NavBar = ({
         <div className={styles["outer-container"]}>
             <div className={styles["inner-container"]}>
                 <nav className={styles['navbar-container']}>
-                    <img src={delicioso} className={styles['logo']} onClick={() => {
+                    <img src={delicioso} alt="logo" className={styles['logo']} onClick={() => {
                         setSearchFieldTemp('');
                         navigate('/')
                     }}/>

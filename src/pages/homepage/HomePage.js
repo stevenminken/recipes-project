@@ -11,8 +11,6 @@ import axios from "axios";
 const HomePage = ({
                       searchField,
                       setSearchField,
-                      searchFieldTemp,
-                      setSearchFieldTemp,
                   }) => {
 
     const {API_ID, API_KEY} = useContext(AuthContext);
@@ -66,7 +64,7 @@ const HomePage = ({
             void fetchInitialData();
             toggleInitialRenderHome(false);
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialRenderHome])
 
 
@@ -79,7 +77,7 @@ const HomePage = ({
         }
 
         void searchRecipes(searchField);
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchField]);
 
     return (
@@ -89,8 +87,6 @@ const HomePage = ({
                     <Header
                         toggleSearchInitiated={toggleSearchInitiated}
                         setSearchField={setSearchField}
-                        searchFieldTemp={searchFieldTemp}
-                        setSearchFieldTemp={setSearchFieldTemp}
                     />
                     {!loadingError && (
                         <>
