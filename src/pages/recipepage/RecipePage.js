@@ -22,6 +22,7 @@ const RecipePage = () => {
         if (id) {
             void fetchData();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
     return (
         <div className="outer-container">
@@ -31,7 +32,7 @@ const RecipePage = () => {
                         <div className={styles["content-div"]}>
                             <h2 className={styles["title"]}>{recipe.label}</h2>
                             <div className={styles["top-div"]}>
-                                <img src={recipe.image} className={styles["image"]}/>
+                                <img src={recipe.image} alt={recipe.label} className={styles["image"]}/>
                                 <div className={styles["details-div"]}>
                                     <h4 className={styles['recipe-h4-title']}>Mealtype</h4>
                                     <p>{recipe.mealType}</p>

@@ -1,8 +1,9 @@
+import React from "react";
 import {createContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
 import jwtDecode from "jwt-decode";
-import {getCurrentTime, returnRandomSearchQuery} from "../helpers/functions";
+import {getCurrentTime} from "../helpers/functions";
 
 export const AuthContext = createContext({});
 

@@ -30,6 +30,7 @@ const ProfilePage = ({setSearchField}) => {
             if (role.name.includes('ADMIN')) {
                 userRole = "admin"
             }
+            return null;
         });
         return userRole;
     }
