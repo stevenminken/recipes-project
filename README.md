@@ -27,7 +27,7 @@ Voor registeren, authentiseren en inloggen van de gebruikers maak ik gebruik van
 
 Clone de repository naar je eigen computer:
 ```
-git clone https://github.com/stevenminken/recipes-project
+git clone git@github.com:stevenminken/recipes-project.git
 ```
 
 Open het project in een IDE zoals bijvoorbeeld WebStorm van jetbrains.
