@@ -7,7 +7,7 @@ const Footer = () => {
         <div className={styles["outer-container"]}>
             <div className="inner-container">
                 <footer className={styles['inner-footer']}>
-                    <p>&#169;2023 Steven Minken</p>
+                    <p>&#169;Steven Minken 2023</p>
                     <p><Link to='/privacypolicy' className={styles['footer-contact-link']}>Privacy policy</Link></p>
                     <p><Link to='/termsofuse' className={styles['footer-contact-link']}>Terms of use</Link></p>
                     <p><Link to='/contact' className={styles['footer-contact-link']}>Contact</Link></p>

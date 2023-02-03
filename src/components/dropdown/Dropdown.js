@@ -7,7 +7,7 @@ import {returnRandomSearchQuery} from "../../helpers/functions";
 const Dropdown = ({setSearchField, isOpen, setIsOpen}) => {
 
     const navigate = useNavigate();
-    const {isAuth, user, logout} = useContext(AuthContext);
+    const {isAuth, logout} = useContext(AuthContext);
 
     useEffect(() => {
         document.body.addEventListener("click", (e) => {
@@ -23,10 +23,8 @@ const Dropdown = ({setSearchField, isOpen, setIsOpen}) => {
     };
 
     function handleLogout() {
-        const randomString = returnRandomSearchQuery();
         logout();
-        setSearchField(randomString);
-        navigate('/');
+        setSearchField(returnRandomSearchQuery());
     }
 
     return (

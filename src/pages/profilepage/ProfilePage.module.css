@@ -116,4 +116,60 @@
     width: 100%;
     justify-content: center;
 }
+.response-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.succes-message-email {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 5px;
+    align-items: center;
+    width: 300px;
+    font-size: 16px;
+    color: green;
+    margin-left: 5px;
+}
+
+.succes-message-password {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 5px;
+    align-items: center;
+    width: 300px;
+    font-size: 16px;
+    color: green;
+    margin-left: 5px;
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 16px;
+    color: red;
+    margin-left: 5px;
+}
+.error-message-email {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 5px;
+    align-items: center;
+    width: 300px;
+    font-size: 16px;
+    color: red;
+    margin-left: 5px;
+}
+
+.error-message-password {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 5px;
+    width: 300px;
+    font-size: 16px;
+    color: red;
+    margin-left: 5px;
+}
 

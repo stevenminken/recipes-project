@@ -1,3 +1,5 @@
+import React, {useContext, useState} from "react";
+import {AuthContext} from "./context/AuthContext";
 import './App.css';
 import {Routes, Route, Navigate} from "react-router-dom";
 import RegistrationPage from "./pages/registrationpage/RegistrationPage";
@@ -8,8 +10,6 @@ import ProfilePage from "./pages/profilepage/ProfilePage";
 import NotFoundPage from "./pages/notfoundpage/NotFoundPage";
 import ContactPage from "./pages/contactpage/ContactPage";
 import Footer from "./components/footer/Footer";
-import React, {useContext, useState} from "react";
-import {AuthContext} from "./context/AuthContext";
 import NavBar from "./components/navbar/NavBar";
 import PrivacyPolicyPage from "./pages/privacypolicy/PrivacyPolicyPage";
 import TermsOfUsePage from "./pages/termsofuse/TermsOfUsePage";
@@ -19,35 +19,23 @@ import Filler from "./components/filler/Filler";
 function App() {
 
     const {isAuth} = useContext(AuthContext);
-
-    const [recipes, setRecipes] = useState([]);
-    const [searchFieldTemp, setSearchFieldTemp] = useState('');
     const [searchField, setSearchField] = useState('');
-    const [searchInitiated, toggleSearchInitiated] = useState(false);
-    const [initialRenderHome, toggleInitialRenderHome] = useState(true);
+    const [searchFieldTemp, setSearchFieldTemp] = useState('');
 
     return (
         <div>
             <Filler/>
             <NavBar
                 setSearchField={setSearchField}
-                toggleInitialRenderHome={toggleInitialRenderHome}
                 setSearchFieldTemp={setSearchFieldTemp}
             />
-
             <Routes>
                 <Route path="/" element={
                     <HomePage
-                        recipes={recipes}
-                        setRecipes={setRecipes}
-                        searchInitiated={searchInitiated}
-                        toggleSearchInitiated={toggleSearchInitiated}
                         searchField={searchField}
                         setSearchField={setSearchField}
-                        initialRenderHome={initialRenderHome}
-                        toggleInitialRenderHome={toggleInitialRenderHome}
-                        setSearchFieldTemp={setSearchFieldTemp}
                         searchFieldTemp={searchFieldTemp}
+                        setSearchFieldTemp={setSearchFieldTemp}
                     />}/>
                 <Route path="/recipe/:id" element={<RecipePage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>

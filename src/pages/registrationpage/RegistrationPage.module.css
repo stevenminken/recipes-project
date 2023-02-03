@@ -68,10 +68,31 @@ section {
     justify-content: center;
 }
 
+.succes-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 16px;
+    color: green;
+    margin-left: 5px;
+}
+
 .error-message {
     display: flex;
+    justify-content: center;
     align-items: center;
-    width: 400px;
+    width: 100%;
+    font-size: 16px;
+    color: red;
+    margin-left: 5px;
+}
+.error-message-input {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 5px;
+    width: 300px;
     font-size: 16px;
     color: red;
     margin-left: 5px;

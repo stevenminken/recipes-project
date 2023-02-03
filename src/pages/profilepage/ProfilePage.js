@@ -6,7 +6,7 @@ import Button from "../../components/button/Button";
 import {returnRandomSearchQuery} from "../../helpers/functions";
 
 const ProfilePage = ({setSearchField}) => {
-    const {user, updateUserEmail, updateUserPassword, responseError} = useContext(AuthContext);
+    const {user, updateUserEmail, updateUserPassword, succesResponse, responseError} = useContext(AuthContext);
 
     const [email, setEmail] = useState('');
     const [role, setRole] = useState('User');
@@ -34,14 +34,7 @@ const ProfilePage = ({setSearchField}) => {
         return userRole;
     }
 
-
-    const handleUpdate = (value, currentValue, updateFunction) => {
-        if (value !== '' && value !== currentValue) {
-            updateFunction(value);
-        }
-    }
-
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault();
         if (email.length > 0 && email.length < 6) {
             toggleEmailError(true);
@@ -69,10 +62,10 @@ const ProfilePage = ({setSearchField}) => {
         }
         if (!emailError && !passwordError && !repeatPasswordError) {
             if (email.length > 0) {
-                handleUpdate(email, user.email, updateUserEmail);
+                updateUserEmail(email);
             }
             if (password.length > 0) {
-                handleUpdate(password, '', updateUserPassword);
+                updateUserPassword(password);
             }
         }
     }
@@ -106,8 +99,11 @@ const ProfilePage = ({setSearchField}) => {
                                 onChange={(e) => setEmail(e.target.value)}>
                             </input>
                                 {emailError && (
-                                    <p className={styles['error-message']}>{emailErrorMessage}</p>)
+                                    <p className={styles['error-message-email']}>{emailErrorMessage}</p>)
                                 }
+                                {succesResponse.succesEmail && (
+                                    <p className={styles['succes-message-email']}>{succesResponse.succesMessageEmail}</p>
+                                )}
                             </section>
                             <section>
                                 <label htmlFor="password">New Password:</label><input
@@ -119,8 +115,11 @@ const ProfilePage = ({setSearchField}) => {
                                 onChange={(e) => setPassword(e.target.value)}>
                             </input>
                                 {passwordError && (
-                                    <p className={styles['error-message']}>{passwordErrorMessage}</p>)
+                                    <p className={styles['error-message-password']}>{passwordErrorMessage}</p>)
                                 }
+                                {succesResponse.succesPassword && (
+                                    <p className={styles['succes-message-password']}>{succesResponse.succesMessagePassword}</p>
+                                )}
                             </section>
                             <section>
                                 <label htmlFor="repeatPassword">Repeat Password:</label><input
@@ -132,8 +131,13 @@ const ProfilePage = ({setSearchField}) => {
                                 onChange={(e) => setRepeatPassword(e.target.value)}>
                             </input>
                                 {repeatPasswordError && (
-                                    <p className={styles['error-message']}>{repeatPasswordErrorMessage}</p>)
+                                    <p className={styles['error-message-password']}>{repeatPasswordErrorMessage}</p>)
                                 }
+                            </section>
+                            <section className={styles['response-section']}>
+                            {responseError.error && (
+                                <p className={styles['error-message']}>{responseError.errorMessage.data.message}</p>
+                            )}
                             </section>
                             <section className={styles['button-section']}>
                                 <Button>Save Changes</Button>

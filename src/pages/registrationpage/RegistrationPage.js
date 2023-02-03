@@ -6,7 +6,8 @@ import {AuthContext} from "../../context/AuthContext";
 
 const RegistrationPage = () => {
 
-    const {register} = useContext(AuthContext);
+    const {register, succesResponse, responseError} = useContext(AuthContext);
+
     const [usernameError, toggleUsernameError] = useState(false);
     const [usernameErrorMessage, setUsernameErrorMessage] = useState('');
     const [emailError, toggleEmailError] = useState(false);
@@ -22,8 +23,20 @@ const RegistrationPage = () => {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [role, setRole] = useState('user');
 
-    async function handleSubmit(e) {
+    function resetAllErrors() {
+        toggleUsernameError(false);
+        setUsernameErrorMessage('');
+        toggleEmailError(false);
+        setEmailErrorMessage('');
+        togglePasswordError(false);
+        setPasswordErrorMessage('');
+        toggleRepeatPasswordError(false);
+        setRepeatPasswordErrorMessage('');
+    }
+
+    function handleSubmit(e) {
         e.preventDefault();
+        resetAllErrors();
         if (username.length < 6) {
             toggleUsernameError(true);
             setUsernameErrorMessage('username should be at least 6 characters');
@@ -79,7 +92,7 @@ const RegistrationPage = () => {
                                 onChange={(e) => setUsername(e.target.value)}
                             />
                             {usernameError && (
-                                <p className={styles['error-message']}>{usernameErrorMessage}</p>)
+                                <p className={styles['error-message-input']}>{usernameErrorMessage}</p>)
                             }
                         </section>
                         <section>
@@ -94,7 +107,7 @@ const RegistrationPage = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                             {emailError && (
-                                <p className={styles['error-message']}>{emailErrorMessage}</p>)
+                                <p className={styles['error-message-input']}>{emailErrorMessage}</p>)
                             }
                         </section>
                         <section>
@@ -109,7 +122,7 @@ const RegistrationPage = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             {passwordError && (
-                                <p className={styles['error-message']}>{passwordErrorMessage}</p>)
+                                <p className={styles['error-message-input']}>{passwordErrorMessage}</p>)
                             }
                         </section>
                         <section>
@@ -122,7 +135,7 @@ const RegistrationPage = () => {
                             onChange={(e) => setRepeatPassword(e.target.value)}>
                         </input>
                             {repeatPasswordError && (
-                                <p className={styles['error-message']}>{repeatPasswordErrorMessage}</p>)
+                                <p className={styles['error-message-input']}>{repeatPasswordErrorMessage}</p>)
                             }
                         </section>
                         <section>
@@ -148,6 +161,12 @@ const RegistrationPage = () => {
                                     /></label>
                             </section>
                         </section>
+                        {succesResponse.succes && (
+                            <p className={styles['succes-message']}>{succesResponse.succesMessage}</p>
+                        )}
+                        {responseError.error && (
+                            <p className={styles['error-message']}>{responseError.errorMessage.data.message}</p>
+                        )}
                         <section className={styles['button-section']}>
                             <Button>
                                 Submit

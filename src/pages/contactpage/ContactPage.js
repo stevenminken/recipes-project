@@ -11,7 +11,7 @@ const ContactPage = () => {
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [remark, setRemark] = useState('');
-    const [formactive, toggleFormactive] = useState(true);
+    const [formActive, toggleFormActive] = useState(true);
 
 
     function handleSubmit(e) {
@@ -25,8 +25,8 @@ const ContactPage = () => {
     }
 
     function handleToggle() {
-        if (!formactive) {
-            toggleFormactive(true);
+        if (!formActive) {
+            toggleFormActive(true);
         }
     }
 
@@ -47,7 +47,7 @@ const ContactPage = () => {
                                 placeholder="First Name"
                                 value={firstname}
                                 onChange={(e) => setFirstname(e.target.value)}
-                                onClick={() => toggleFormactive(false)}
+                                onClick={() => toggleFormActive(false)}
                             />
                         </div>
                         <div className={styles['input-div']}>
@@ -59,7 +59,7 @@ const ContactPage = () => {
                                 placeholder="Last Name"
                                 value={lastname}
                                 onChange={(e) => setLastname(e.target.value)}
-                                onClick={() => toggleFormactive(false)}
+                                onClick={() => toggleFormActive(false)}
                             />
                         </div>
                         <div className={styles['input-div']}>
@@ -71,7 +71,7 @@ const ContactPage = () => {
                                 placeholder="Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                onClick={() => toggleFormactive(false)}
+                                onClick={() => toggleFormActive(false)}
                             />
                         </div>
                         <div className={styles['input-div']}>
@@ -84,15 +84,14 @@ const ContactPage = () => {
                                 onChange={(e) => setRemark(e.target.value)}
                                 rows={6}
                                 cols={40}
-                                onClick={() => toggleFormactive(false)}
+                                onClick={() => toggleFormActive(false)}
                             />
                         </div>
-                        {!formactive && (
+                        {!formActive && (
                             <div className={styles["warning"]}>
                                 This form is unfortunately not active yet
                             </div>
-                        )
-                        }
+                        )}
                         <Button>Send</Button>
                     </form>
                 </main>

@@ -45,14 +45,21 @@
 
 .ingredient-list {
     display: flex;
+    width: 100%;
     flex-direction: column;
-    list-style: none;
+    list-style: disc outside;
+    margin-left: 20px;
+}
+
+.recipe-step-list {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 label {
     width: 200px;
 }
 
-h4 {
-    margin-top: 5px;
+.recipe-h4-title {
+    margin-top: 12px;
 }

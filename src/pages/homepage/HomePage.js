@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import styles from './HomePage.module.css';
 import Header from "../../components/header/Header";
@@ -6,22 +6,24 @@ import Button from "../../components/button/Button";
 import {returnRandomSearchQuery} from "../../helpers/functions";
 import {AuthContext} from "../../context/AuthContext";
 import {v4 as uuidv4} from 'uuid';
+import axios from "axios";
 
 const HomePage = ({
-                      recipes,
-                      setRecipes,
-                      searchInitiated,
-                      toggleSearchInitiated,
                       searchField,
                       setSearchField,
                       searchFieldTemp,
                       setSearchFieldTemp,
-                      initialRenderHome,
-                      toggleInitialRenderHome
                   }) => {
 
-    const {fetchRecipesData, loadingError, loadingErrorMessage} = useContext(AuthContext);
+    const {API_ID, API_KEY} = useContext(AuthContext);
     const navigate = useNavigate();
+
+    const [initialRenderHome, toggleInitialRenderHome] = useState(true);
+    const [loadingError, toggleLoadingError] = useState(false);
+    const [loadingErrorMessage, setLoadingErrorMessage] = useState('');
+
+    const [recipes, setRecipes] = useState([]);
+    const [searchInitiated, toggleSearchInitiated] = useState(false);
 
     function getRecipeId(uri) {
         const word = 'recipe_';
@@ -30,6 +32,21 @@ const HomePage = ({
         const result = uri.slice(index + length);
 
         return result
+    }
+
+    async function fetchRecipesData(searchterm) {
+
+        try {
+            const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchterm}&app_id=${API_ID}&app_key=${API_KEY}`;
+            const response = await axios.get(uri);
+            toggleLoadingError(false);
+            setLoadingErrorMessage('');
+            return response;
+        } catch (err) {
+            // console.error(err);
+            toggleLoadingError(true);
+            setLoadingErrorMessage("To many fetch requests. Blocked by CORS policy. Please try again later");
+        }
     }
 
     useEffect(() => {
@@ -41,7 +58,7 @@ const HomePage = ({
                     setRecipes(() => response.data.hits);
                 }
             } catch (err) {
-                console.error(err);
+                // console.error(err);
             }
         }
 
@@ -70,16 +87,10 @@ const HomePage = ({
             <div className="inner-container">
                 <div className={styles["content-container"]}>
                     <Header
-                        recipes={recipes}
-                        setRecipes={setRecipes}
-                        searchInitiated={searchInitiated}
                         toggleSearchInitiated={toggleSearchInitiated}
-                        searchField={searchField}
                         setSearchField={setSearchField}
-                        initialRenderHome={initialRenderHome}
-                        toggleInitialRenderHome={toggleInitialRenderHome}
-                        setSearchFieldTemp={setSearchFieldTemp}
                         searchFieldTemp={searchFieldTemp}
+                        setSearchFieldTemp={setSearchFieldTemp}
                     />
                     {!loadingError && (
                         <>
@@ -97,7 +108,6 @@ const HomePage = ({
                                                 <span>
                                                     <p><Link
                                                         to={`/recipe/${getRecipeId(listItem.recipe.uri)}`}>{listItem.recipe.label}</Link></p>
-                                                    {/*<p>STAR RATING TODO</p>*/}
                                                 </span>
                                             </article>
                                         )

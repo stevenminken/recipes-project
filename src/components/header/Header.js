@@ -1,5 +1,4 @@
 import styles from './Header.module.css';
-import {useNavigate} from "react-router-dom";
 import Button from "../button/Button";
 
 const Header = ({
@@ -9,13 +8,9 @@ const Header = ({
                     setSearchFieldTemp
                 }) => {
 
-    const navigate = useNavigate();
-    ;
-
     function handleSubmit(e) {
         e.preventDefault();
         setSearchField(searchFieldTemp);
-        navigate('/');
         toggleSearchInitiated(true);
     }
 

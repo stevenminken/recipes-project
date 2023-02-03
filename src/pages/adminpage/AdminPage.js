@@ -15,7 +15,7 @@ const AdminPage = ({setSearchField}) => {
             setUsers(data);
             setLoading(false);
         }).catch(error => {
-            console.error(error);
+            // console.error(error);
             setLoading(false);
         });
     }, [])

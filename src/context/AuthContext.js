@@ -2,7 +2,7 @@ import {createContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
 import jwtDecode from "jwt-decode";
-import {getCurrentTime} from "../helpers/functions";
+import {getCurrentTime, returnRandomSearchQuery} from "../helpers/functions";
 
 export const AuthContext = createContext({});
 
@@ -20,13 +20,19 @@ function AuthContextProvider({children}) {
         roles: null,
     });
 
-    const [loadingError, toggleLoadingError] = useState(false);
-    const [loadingErrorMessage, setLoadingErrorMessage] = useState('');
     const [responseError, toggleResponseError] = useState({
             error: false,
             errorMessage: '',
         }
     );
+    const [succesResponse, toggleSuccesResponse] = useState({
+        succes: false,
+        succesMessage: '',
+        succesEmail: false,
+        succesMessageEmail: '',
+        succesPassword: false,
+        succesMessagePassword: '',
+    })
 
     useEffect(() => {
         const token = getToken();
@@ -73,7 +79,7 @@ function AuthContextProvider({children}) {
             });
 
         } catch (e) {
-            console.error("fetch fout" + e.response);
+            // console.error("fetch fout" + e.response);
             setAuthentication({
                 isAuth: false,
                 user: null,
@@ -98,21 +104,45 @@ function AuthContextProvider({children}) {
                 "password": password,
                 "roles": roles,
             });
-            navigate('/login');
+            toggleSuccesResponse(() => {
+                return {
+                    ...succesResponse,
+                    succes: true,
+                    succesMessage: response.data.message,
+                }
+            })
             toggleResponseError(() => {
                 return {
                     error: false,
                     errorMessage: '',
                 }
             })
+            setTimeout(() => {
+                navigate('/login');
+                toggleSuccesResponse(() => {
+                    return {
+                        ...succesResponse,
+                        succes: false,
+                        succesMessage: '',
+                    }
+                })
+            }, 3000);
         } catch (e) {
-            console.error(e.response);
+            // console.error(e.response);
             toggleResponseError(() => {
                 return {
                     error: true,
                     errorMessage: e.response,
                 }
             })
+            setTimeout(() => {
+                toggleResponseError(() => {
+                    return {
+                        error: false,
+                        errorMessage: '',
+                    }
+                })
+            }, 3000);
         }
     }
 
@@ -134,7 +164,7 @@ function AuthContextProvider({children}) {
                 }
             })
         } catch (e) {
-            console.error(e);
+            // console.error(e);
             toggleResponseError(() => {
                 return {
                     error: true,
@@ -157,7 +187,6 @@ function AuthContextProvider({children}) {
     async function updateUserEmail(email) {
         try {
             const response = await axios.put(`https://frontend-educational-backend.herokuapp.com/api/user`, {
-                    name: "steven",
                     email: email,
                 },
                 {
@@ -166,6 +195,24 @@ function AuthContextProvider({children}) {
                         Authorization: `Bearer ${getToken()}`,
                     },
                 });
+            if (response.status === 200) {
+                toggleResponseError(() => {
+                    return {
+                        error: false,
+                        errorMessage: '',
+                    }
+                })
+                toggleSuccesResponse(() => {
+                    return {
+                        ...succesResponse,
+                        succesEmail: true,
+                        succesMessageEmail: 'email updated',
+                    }
+                })
+            }
+            if (response.status === 400) {
+                throw new Error('Something went wrong, please try again.');
+            }
             setAuthentication({
                 ...authentication,
                 user: {
@@ -175,16 +222,20 @@ function AuthContextProvider({children}) {
                 },
                 status: 'done',
             });
-            fetchUserData();
-            toggleResponseError(() => {
-                return {
-                    error: false,
-                    errorMessage: '',
-                }
-            })
+            setTimeout(() => {
+                toggleSuccesResponse(() => {
+                    return {
+                        ...succesResponse,
+                        succesEmail: false,
+                        succesMessageEmail: '',
+                    }
+                })
+            }, 3000);
+            await fetchUserData();
         } catch
             (e) {
-            console.error(e.response);
+            // console.error(e.response);
+            console.log("error update email: " + e.data.message);
             setAuthentication({
                 ...authentication,
                 status: 'done',
@@ -195,12 +246,19 @@ function AuthContextProvider({children}) {
                     errorMessage: e.response,
                 }
             })
+            toggleSuccesResponse(() => {
+                return {
+                    ...succesResponse,
+                    succesEmail: false,
+                    succesMessageEmail: '',
+                }
+            })
         }
     }
 
     async function updateUserPassword(password) {
         try {
-            await axios.put(`https://frontend-educational-backend.herokuapp.com/api/user`, {
+            const response = await axios.put(`https://frontend-educational-backend.herokuapp.com/api/user`, {
                     password: password,
                     repeatedPassword: password,
                 },
@@ -210,19 +268,56 @@ function AuthContextProvider({children}) {
                         Authorization: `Bearer ${getToken()}`,
                     },
                 });
-            toggleResponseError(() => {
-                return {
-                    error: false,
-                    errorMessage: '',
-                }
+            if (response.status === 200) {
+                toggleResponseError(() => {
+                    return {
+                        error: false,
+                        errorMessage: '',
+                    }
+                })
+                toggleSuccesResponse(() => {
+                    return {
+                        ...succesResponse,
+                        succesPassword: true,
+                        succesMessagePassword: 'password updated',
+                    }
+                })
+            }
+            if (response.status === 400) {
+                throw new Error('Something went wrong, please try again.');
+            }
+            setAuthentication({
+                ...authentication,
+                status: 'done',
             })
+            setTimeout(() => {
+                toggleSuccesResponse(() => {
+                    return {
+                        ...succesResponse,
+                        succesPassword: false,
+                        succesMessagePassword: '',
+                    }
+                })
+            }, 3000);
+            await fetchUserData();
         } catch
             (e) {
-            console.error(e.response);
+            // console.error(e.response);
+            setAuthentication({
+                ...authentication,
+                status: 'done',
+            })
             toggleResponseError(() => {
                 return {
                     error: true,
                     errorMessage: e.response,
+                }
+            })
+            toggleSuccesResponse(() => {
+                return {
+                    ...succesResponse,
+                    succesPassword: false,
+                    succesMessagePassword: '',
                 }
             })
         }
@@ -246,7 +341,7 @@ function AuthContextProvider({children}) {
             return response.data;
         } catch
             (e) {
-            console.error(e.response);
+            // console.error(e.response);
             toggleResponseError(() => {
                 return {
                     error: true,
@@ -255,22 +350,6 @@ function AuthContextProvider({children}) {
             })
         }
     }
-
-    async function fetchRecipesData(searchterm) {
-
-        try {
-            const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchterm}&app_id=${API_ID}&app_key=${API_KEY}`;
-            const response = await axios.get(uri);
-            toggleLoadingError(false);
-            setLoadingErrorMessage('');
-            return response;
-        } catch (err) {
-            console.error(err);
-            toggleLoadingError(true);
-            setLoadingErrorMessage("To many fetch requests. Blocked by CORS policy. Please try again later");
-        }
-    }
-
 
     const contextData = {
         isAuth: authentication.isAuth,
@@ -282,10 +361,11 @@ function AuthContextProvider({children}) {
         updateUserEmail: updateUserEmail,
         updateUserPassword: updateUserPassword,
         requestAllUserData: requestAllUserData,
-        fetchRecipesData: fetchRecipesData,
         responseError: responseError,
-        loadingError: loadingError,
-        loadingErrorMessage: loadingErrorMessage,
+        succesResponse: succesResponse,
+        toggleSuccesResponse: toggleSuccesResponse,
+        API_ID: API_ID,
+        API_KEY: API_KEY,
     };
 
 
