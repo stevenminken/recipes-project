@@ -19,7 +19,8 @@ const HomePage = ({
     const [loadingError, toggleLoadingError] = useState(false);
     const [loadingErrorMessage, setLoadingErrorMessage] = useState('');
 
-    const [recipes, setRecipes] = useState([]);
+    const [recipes, setRecipes] = useState({});
+    const [nextUrl, setNextUrl] = useState('');
     const [searchInitiated, toggleSearchInitiated] = useState(false);
 
     function getRecipeId(uri) {
@@ -37,15 +38,24 @@ const HomePage = ({
             if (searchterm === '') {
                 searchterm = returnRandomSearchQuery();
             }
-            const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchterm}&app_id=${API_ID}&app_key=${API_KEY}`;
-            await axios.get(uri).then((response) => {
-                setRecipes(() => response.data.hits);
-            });
+            if (searchterm === "MORE") {
+                const uri = nextUrl;
+                await axios.get(uri).then((response) => {
+                    setRecipes(() => response);
+                    setNextUrl(response.data._links.next.href);
+                });
+            } else {
+                const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchterm}&app_id=${API_ID}&app_key=${API_KEY}`;
+                await axios.get(uri).then((response) => {
+                    setRecipes(() => response);
+                    setNextUrl(response.data._links.next.href);
+                });
+            }
             toggleLoadingError(false);
             setLoadingErrorMessage('');
         } catch (err) {
             toggleLoadingError(true);
-            setLoadingErrorMessage("To many fetch requests. Blocked by CORS policy. Please try again later");
+            setLoadingErrorMessage("Probably too many fetch requests. Please try again later. Error: " + err.message);
         }
     }
 
@@ -73,7 +83,7 @@ const HomePage = ({
                                     later</p>)}
                             {Object.keys(recipes).length > 0 && (
                                 <div className={styles['recipe-article-container']}>
-                                    {recipes.map((listItem) => {
+                                    {recipes.data.hits.map((listItem) => {
                                         return (
                                             <article className={styles['recipe-article']}
                                                      key={uuidv4()}>
@@ -99,14 +109,14 @@ const HomePage = ({
                                         setSearchField(returnRandomSearchQuery());
                                     }}>
                                         Back
-                                    </Button>
+                                    </Button>n
                                 </section>
                             )}
                         {(Object.keys(recipes).length !== 0) &&
                             (<section>
                                     <Button onClick={() => {
                                         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-                                        setSearchField(returnRandomSearchQuery());
+                                        fetchRecipesData("MORE");
                                     }
                                     }>More
                                     </Button>
