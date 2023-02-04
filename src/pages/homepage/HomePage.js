@@ -20,6 +20,7 @@ const HomePage = ({
     const [loadingErrorMessage, setLoadingErrorMessage] = useState('');
 
     const [recipes, setRecipes] = useState({});
+    const [urlHistory, setUrlhistory] = useState([]);
     const [nextUrl, setNextUrl] = useState('');
     const [searchInitiated, toggleSearchInitiated] = useState(false);
 
@@ -38,17 +39,30 @@ const HomePage = ({
             if (searchterm === '') {
                 searchterm = returnRandomSearchQuery();
             }
-            if (searchterm === "MORE") {
+            if (searchterm === "BACK") {
+                // history 1 terug en laatste item wissen
+                setUrlhistory(() => {
+                    const newArray = urlHistory.slice(0, -1);
+                    return newArray;
+                });
+                const uri = urlHistory[urlHistory.length - 2];
+                await axios.get(uri).then((response) => {
+                    setRecipes(() => response);
+                    setNextUrl(response.data._links.next.href);
+                });
+            } else if (searchterm === "MORE") {
                 const uri = nextUrl;
                 await axios.get(uri).then((response) => {
                     setRecipes(() => response);
                     setNextUrl(response.data._links.next.href);
+                    setUrlhistory([...urlHistory, uri]);
                 });
             } else {
                 const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchterm}&app_id=${API_ID}&app_key=${API_KEY}`;
                 await axios.get(uri).then((response) => {
                     setRecipes(() => response);
                     setNextUrl(response.data._links.next.href);
+                    setUrlhistory([...urlHistory, uri]);
                 });
             }
             toggleLoadingError(false);
@@ -113,7 +127,15 @@ const HomePage = ({
                                 </section>
                             )}
                         {(Object.keys(recipes).length !== 0) &&
-                            (<section>
+                            (<section
+                                    className={(Object.keys(urlHistory).length > 1) ? styles['button-section'] : styles['empty']}>
+                                    {(Object.keys(urlHistory).length > 1) && (
+                                        <Button onClick={() => {
+                                            window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+                                            fetchRecipesData("BACK");
+                                        }
+                                        }>Back
+                                        </Button>)}
                                     <Button onClick={() => {
                                         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                                         fetchRecipesData("MORE");
