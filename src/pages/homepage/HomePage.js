@@ -16,7 +16,6 @@ const HomePage = ({
     const {API_ID, API_KEY} = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [initialRenderHome, toggleInitialRenderHome] = useState(true);
     const [loadingError, toggleLoadingError] = useState(false);
     const [loadingErrorMessage, setLoadingErrorMessage] = useState('');
 
@@ -35,45 +34,24 @@ const HomePage = ({
     async function fetchRecipesData(searchterm) {
 
         try {
+            if (searchterm === '') {
+                searchterm = returnRandomSearchQuery();
+            }
             const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchterm}&app_id=${API_ID}&app_key=${API_KEY}`;
-            const response = await axios.get(uri);
+            await axios.get(uri).then((response) => {
+                setRecipes(() => response.data.hits);
+            });
             toggleLoadingError(false);
             setLoadingErrorMessage('');
-            return response;
         } catch (err) {
-            // console.error(err);
             toggleLoadingError(true);
             setLoadingErrorMessage("To many fetch requests. Blocked by CORS policy. Please try again later");
         }
     }
 
     useEffect(() => {
-        async function fetchInitialData() {
-            try {
-                const recipe = returnRandomSearchQuery();
-                const response = await fetchRecipesData(recipe);
-                if (response) {
-                    setRecipes(() => response.data.hits);
-                }
-            } catch (err) {
-                // console.error(err);
-            }
-        }
-
-        if (initialRenderHome === true) {
-            void fetchInitialData();
-            toggleInitialRenderHome(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [initialRenderHome])
-
-
-    useEffect(() => {
         async function searchRecipes(searchterm) {
-            const response = await fetchRecipesData(searchterm);
-            if (response) {
-                setRecipes(() => response.data.hits);
-            }
+            await fetchRecipesData(searchterm);
         }
 
         void searchRecipes(searchField);

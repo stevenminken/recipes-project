@@ -6,8 +6,7 @@ import Dropdown from "../dropdown/Dropdown";
 import {useNavigate} from "react-router-dom";
 
 const NavBar = ({
-                    setSearchField,
-                    setSearchFieldTemp
+                    setSearchField
                 }) => {
 
     const {isAuth, user} = useContext(AuthContext);
@@ -19,11 +18,11 @@ const NavBar = ({
             <div className={styles["inner-container"]}>
                 <nav className={styles['navbar-container']}>
                     <img src={delicioso} alt="logo" className={styles['logo']} onClick={() => {
-                        setSearchFieldTemp('');
+                        setSearchField('');
                         navigate('/')
                     }}/>
                     <h1 className={styles['title']} onClick={() => {
-                        setSearchFieldTemp('');
+                        setSearchField('');
                         navigate('/')
                     }}>Delicioso</h1>
                     {isAuth && (
