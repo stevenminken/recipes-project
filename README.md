@@ -21,7 +21,7 @@ Om dit te mogelijk te maken heb ik een REACT webapplicatie gebouwd waarin gebrui
 Daarnaast maak ik gebruik van de Edamam API (https://www.edamam.com/) om recepten op te vragen en te verwerken in mijn applicatie. 
 Voor registeren, authentiseren en inloggen van de gebruikers maak ik gebruik van de NOVI backend.
 
-![screenshot](src/assets/screenshotDeliciosoHomepage2.png)
+![screenshotDeliciosoHomepage](https://user-images.githubusercontent.com/107759146/216838261-67926486-79ac-458e-ba6f-1d2b87dc2398.png)
 
 ## Installatie
 
