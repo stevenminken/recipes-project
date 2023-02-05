@@ -75,8 +75,8 @@ const LoginPage = () => {
                         <section className={styles['button-section']}>
                             <Button>Submit</Button>
                             {responseError.error &&
-                                <section><p className={styles['error-message']}>Verify your login credentials and try again</p>
-                                </section>}
+                                <h4 className={styles['error-message']}>Verify your login credentials and try again</h4>
+                                }
                         </section>
                         {/*    TODO password vergeten*/}
                     </form>

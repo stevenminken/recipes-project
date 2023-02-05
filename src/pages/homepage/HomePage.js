@@ -33,7 +33,6 @@ const HomePage = ({searchField, setSearchField}) => {
             if (API_KEY === null || API_KEY === undefined) {
                 throw new Error("Please provide API keys in .env file according to the instructions in README.md");
             }
-
             if (searchterm === '') {
                 searchterm = returnRandomSearchQuery();
             }
@@ -83,11 +82,16 @@ const HomePage = ({searchField, setSearchField}) => {
                         toggleSearchInitiated={toggleSearchInitiated}
                         setSearchField={setSearchField}
                     />
+                    {loadingError && (
+                        <div className={styles['error-div']}>
+                            <h2>Sorry, there was a problem: </h2>
+                            <h2 className={styles['loading-error']}>{loadingErrorMessage}</h2>
+                        </div>
+                    )}
                     {!loadingError && (
                         <>
                             {(Object.keys(recipesList).length === 0 && searchInitiated === true) && (
-                                <p id="search-not-found-p">Sorry we can't find recipes. Please try again or come back
-                                    later</p>)}
+                                <p id="search-not-found-p">Sorry we can't find recipes. Please try again.</p>)}
                             {Object.keys(recipesList).length > 0 && (
                                 <div className={styles['recipe-article-container']}>
                                     {recipesList[recipesList.length - 1].items.map((listItem) => {
@@ -98,7 +102,7 @@ const HomePage = ({searchField, setSearchField}) => {
                                                 <h5>{listItem.recipe.dishType}, {listItem.recipe.cuisineType}</h5>
                                                 <span>
                                                     <p><Link
-                                                        to={`/recipe/${getRecipeId(listItem.recipe.uri)}`}>{listItem.recipe.label}</Link></p>
+                                                        to={`/recipe/${getRecipeId(listItem.recipe.uri)}`} className={styles['title-link']}>{listItem.recipe.label}</Link></p>
                                                 </span>
                                             </article>
                                         )
@@ -106,12 +110,6 @@ const HomePage = ({searchField, setSearchField}) => {
                                 </div>)}
                         </>)}
                     <div className={styles['button-container']}>
-                        {loadingError && (
-                            <div>
-                                <h2>Sorry, there was a problem:</h2>
-                                <h2 className={styles['loading-error']}>{loadingErrorMessage}</h2>
-                            </div>
-                        )}
                         {(Object.keys(recipesList).length === 0 && searchInitiated === true) &&
                             (<section>
                                     <Button onClick={() => {

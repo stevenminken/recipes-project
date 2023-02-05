@@ -20,7 +20,7 @@ const NotFound = ({setSearchField}) => {
                         <h2>This page can't be found</h2>
                         <h3>Return to the main menu</h3>
                         <Button
-                                onClick={handleClick}>
+                                onClick={handleClick} marginTop="15px">
                             Home
                         </Button>
                     </div>
