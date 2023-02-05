@@ -14,17 +14,40 @@
 }
 
 .recipe-article {
-    border-radius: 3px;
-    box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px 0 rgba(0, 0, 0, 0.1);
     background-color: var(--white);
-    flex-basis: 380px;
+    width: 285px;
+    height: 350px;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 10px;
-    padding: 15px;
+    align-items: center;
+    padding: 25px;
 }
+
+
+/*.recipe-article-container {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: center;*/
+/*    flex-wrap: wrap;*/
+/*    gap: 75px;*/
+/*}*/
+
+/*.recipe-article {*/
+/*    border-radius: 3px;*/
+/*    box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.1);*/
+/*    background-color: var(--white);*/
+/*    flex-basis: 380px;*/
+
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: space-between;*/
+/*    gap: 10px;*/
+/*    padding: 15px;*/
+/*}*/
 
 img  {
     border-radius: 3px;
