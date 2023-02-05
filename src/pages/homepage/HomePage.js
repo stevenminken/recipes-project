@@ -8,20 +8,16 @@ import {AuthContext} from "../../context/AuthContext";
 import {v4 as uuidv4} from 'uuid';
 import axios from "axios";
 
-const HomePage = ({
-                      searchField,
-                      setSearchField,
-                  }) => {
+const HomePage = ({searchField, setSearchField}) => {
 
     const {API_ID, API_KEY} = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [initialRenderHome, toggleInitialRenderHome] = useState(true);
     const [loadingError, toggleLoadingError] = useState(false);
     const [loadingErrorMessage, setLoadingErrorMessage] = useState('');
-
-    const [recipes, setRecipes] = useState([]);
     const [searchInitiated, toggleSearchInitiated] = useState(false);
+
+    const [recipesList, setRecipesList] = useState([]);
 
     function getRecipeId(uri) {
         const word = 'recipe_';
@@ -33,47 +29,46 @@ const HomePage = ({
     }
 
     async function fetchRecipesData(searchterm) {
-
         try {
-            const uri = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchterm}&app_id=${API_ID}&app_key=${API_KEY}`;
-            const response = await axios.get(uri);
+            if (API_KEY === null || API_KEY === undefined) {
+                throw new Error("Please provide API keys in .env file according to the instructions in README.md");
+            }
+
+            if (searchterm === '') {
+                searchterm = returnRandomSearchQuery();
+            }
+            if (searchterm === "BACK") {
+                setRecipesList(prevRecipesList => {
+                    const newRecipesList = [...prevRecipesList];
+                    newRecipesList.splice(newRecipesList.length - 1, 1);
+                    return newRecipesList;
+                });
+            } else {
+                const uri = searchterm === "MORE"
+                    ? recipesList[recipesList.length - 1].next
+                    : `https://api.edamam.com/api/recipes/v2?type=public&q=${searchField}&app_id=${API_ID}&app_key=${API_KEY}`;
+
+                await axios.get(uri).then((response) => {
+                    if (response.data.hits.length === 0) {
+                        throw new Error("Recipe not found. Please try again");
+                    }
+                    setRecipesList(prevRecipesList => [...prevRecipesList, {
+                        items: response.data.hits,
+                        next: response.data._links.next.href,
+                    }]);
+                });
+            }
             toggleLoadingError(false);
             setLoadingErrorMessage('');
-            return response;
         } catch (err) {
-            // console.error(err);
             toggleLoadingError(true);
-            setLoadingErrorMessage("To many fetch requests. Blocked by CORS policy. Please try again later");
+            setLoadingErrorMessage(err.message);
         }
     }
 
     useEffect(() => {
-        async function fetchInitialData() {
-            try {
-                const recipe = returnRandomSearchQuery();
-                const response = await fetchRecipesData(recipe);
-                if (response) {
-                    setRecipes(() => response.data.hits);
-                }
-            } catch (err) {
-                // console.error(err);
-            }
-        }
-
-        if (initialRenderHome === true) {
-            void fetchInitialData();
-            toggleInitialRenderHome(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [initialRenderHome])
-
-
-    useEffect(() => {
         async function searchRecipes(searchterm) {
-            const response = await fetchRecipesData(searchterm);
-            if (response) {
-                setRecipes(() => response.data.hits);
-            }
+            await fetchRecipesData(searchterm);
         }
 
         void searchRecipes(searchField);
@@ -90,12 +85,12 @@ const HomePage = ({
                     />
                     {!loadingError && (
                         <>
-                            {(Object.keys(recipes).length === 0 && searchInitiated === true) && (
+                            {(Object.keys(recipesList).length === 0 && searchInitiated === true) && (
                                 <p id="search-not-found-p">Sorry we can't find recipes. Please try again or come back
                                     later</p>)}
-                            {Object.keys(recipes).length > 0 && (
+                            {Object.keys(recipesList).length > 0 && (
                                 <div className={styles['recipe-article-container']}>
-                                    {recipes.map((listItem) => {
+                                    {recipesList[recipesList.length - 1].items.map((listItem) => {
                                         return (
                                             <article className={styles['recipe-article']}
                                                      key={uuidv4()}>
@@ -112,9 +107,12 @@ const HomePage = ({
                         </>)}
                     <div className={styles['button-container']}>
                         {loadingError && (
-                            <h2 className={styles['loading-error']}>{loadingErrorMessage}</h2>
+                            <div>
+                                <h2>Sorry, there was a problem:</h2>
+                                <h2 className={styles['loading-error']}>{loadingErrorMessage}</h2>
+                            </div>
                         )}
-                        {(Object.keys(recipes).length === 0 && searchInitiated === true) &&
+                        {(Object.keys(recipesList).length === 0 && searchInitiated === true) &&
                             (<section>
                                     <Button onClick={() => {
                                         navigate('/');
@@ -124,11 +122,20 @@ const HomePage = ({
                                     </Button>
                                 </section>
                             )}
-                        {(Object.keys(recipes).length !== 0) &&
-                            (<section>
+                        {(Object.keys(recipesList).length !== 0) &&
+                            (<section className={(recipesList.length > 1) ? styles['button-section-back-more'] : styles['button-section-more']}>
+                                    {(Object.keys(recipesList).length > 1) && (
+                                        <Button onClick={() => {
+                                            window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+                                            void fetchRecipesData("BACK");
+                                        }
+
+                                        }>Back
+                                        </Button>
+                                    )}
                                     <Button onClick={() => {
                                         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-                                        setSearchField(returnRandomSearchQuery());
+                                        void fetchRecipesData("MORE");
                                     }
                                     }>More
                                     </Button>

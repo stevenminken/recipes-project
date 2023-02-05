@@ -15,11 +15,12 @@ import PrivacyPolicyPage from "./pages/privacypolicy/PrivacyPolicyPage";
 import TermsOfUsePage from "./pages/termsofuse/TermsOfUsePage";
 import AdminPage from "./pages/adminpage/AdminPage";
 import Filler from "./components/filler/Filler";
+import {returnRandomSearchQuery} from "./helpers/functions";
 
 function App() {
 
     const {isAuth} = useContext(AuthContext);
-    const [searchField, setSearchField] = useState('');
+    const [searchField, setSearchField] = useState(returnRandomSearchQuery());
 
     return (
         <div>

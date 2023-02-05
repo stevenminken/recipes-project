@@ -2,13 +2,14 @@ import React from 'react';
 import styles from './NotFoundPage.module.css';
 import {useNavigate} from "react-router-dom";
 import Button from "../../components/button/Button";
+import {returnRandomSearchQuery} from "../../helpers/functions";
 
 const NotFound = ({setSearchField}) => {
     const navigate = useNavigate();
 
     function handleClick() {
         navigate("/");
-        setSearchField(() => 'desert');
+        setSearchField(() => returnRandomSearchQuery());
     }
 
     return (

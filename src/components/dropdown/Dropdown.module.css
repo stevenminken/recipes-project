@@ -1,6 +1,7 @@
 .login-text {
     color: var(--white);
-    font-size: 20px;
+    font-size: 22px;
+    text-decoration: none;
 }
 
 .dropdown-menu {

@@ -4,11 +4,9 @@ import styles from './NavBar.module.css';
 import {AuthContext} from "../../context/AuthContext";
 import Dropdown from "../dropdown/Dropdown";
 import {useNavigate} from "react-router-dom";
+import {returnRandomSearchQuery} from "../../helpers/functions";
 
-const NavBar = ({
-                    setSearchField,
-                    setSearchFieldTemp
-                }) => {
+const NavBar = ({setSearchField,}) => {
 
     const {isAuth, user} = useContext(AuthContext);
     const navigate = useNavigate();
@@ -19,11 +17,11 @@ const NavBar = ({
             <div className={styles["inner-container"]}>
                 <nav className={styles['navbar-container']}>
                     <img src={delicioso} alt="logo" className={styles['logo']} onClick={() => {
-                        setSearchFieldTemp('');
+                        setSearchField(returnRandomSearchQuery());
                         navigate('/')
                     }}/>
                     <h1 className={styles['title']} onClick={() => {
-                        setSearchFieldTemp('');
+                        setSearchField(returnRandomSearchQuery());
                         navigate('/')
                     }}>Delicioso</h1>
                     {isAuth && (

@@ -89,7 +89,7 @@ const ContactPage = () => {
                                 This form is unfortunately not active yet
                             </div>
                         )}
-                        <Button>Send</Button>
+                        <Button marginBottom="20px">Send</Button>
                     </form>
                 </main>
             </div>
